@@ -1,0 +1,269 @@
+ScreenManagement:
+    HomePage:
+    HowToPlay:
+    Phase1:
+    Phase2:
+    Phase3:
+    FinalPage:
+
+<HomePage>:
+    name: "homepage"
+    
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(20)
+        padding: dp(20)
+        size_hint: None, None
+        size: root.width, root.height
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: 1
+
+            Label:
+                text: "CyberEscape"
+                font_size: "24sp"
+                pos_hint: {"center_x": 0.5, "top": 1}
+
+            TextInput:
+                id: name_input
+                hint_text: "Insira seu nome"
+                multiline: False
+                size_hint_y: None
+                height: self.font_size * 2
+                size_hint_x: 0.8 
+                pos_hint: {"center_x": 0.5, "top": 0.8}
+
+        Widget:
+            size_hint_y: None
+            height: dp(2)
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: None
+            height: self.minimum_height
+
+            MDRoundFlatButton:
+                text: "Start"
+                size_hint: None, None
+                pos_hint: {"center_x": 0.5}
+                on_release: app.root.current = "phase1"
+
+            Widget:
+                size_hint_y: None
+                height: dp(20)
+
+            MDRoundFlatButton:
+                text: "How to Play"
+                size_hint: None, None
+                pos_hint: {"center_x": 0.5}
+                on_release: app.root.current = "howtoplay"
+
+<Phase1>:
+    name: "phase1"
+
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(20)
+        padding: dp(20)
+        size_hint: None, None
+        size: root.width, root.height
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: self.minimum_height
+
+            Widget:
+                size_hint_x: None
+                width: dp(10)
+
+            MDLabel:
+                text: "Test Your Knowledge"
+                font_size: "24sp"
+                halign: "center"
+                valign: "top"
+
+            Widget:
+                size_hint_x: None
+                width: dp(10)
+
+            MDLabel:
+                id: timer_label
+                text: str(root.timer)
+                font_size: "18sp"
+                halign: "right"
+                valign: "top"
+
+        Widget:
+            size_hint_y: None
+            height: dp(20)
+
+        MDLabel:
+            text: "What is the primary goal of cybersecurity?"
+            font_size: "18sp"
+            halign: "center"
+            valign: "middle"
+
+        Widget:
+            size_hint_y: None
+            height: dp(20)
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: None
+            height: self.minimum_height
+
+            MDRaisedButton:
+                text: "Protecting Information"
+                size_hint: None, None
+                pos_hint: {"center_x": 0.5}
+                on_release: root.check_answer("correct")
+
+            Widget:
+                size_hint_y: None
+                height: dp(10)
+
+            MDRaisedButton:
+                text: "Making Systems Faster"
+                size_hint: None, None
+                pos_hint: {"center_x": 0.5}
+                on_release: root.check_answer("incorrect")
+
+            Widget:
+                size_hint_y: None
+                height: dp(10)
+
+            MDRaisedButton:
+                text: "Selling Software"
+                size_hint: None, None
+                pos_hint: {"center_x": 0.5}
+                on_release: root.check_answer("incorrect")
+
+            Widget:
+                size_hint_y: None
+                height: dp(10)
+
+            MDRaisedButton:
+                text: "Creating Websites"
+                size_hint: None, None
+                pos_hint: {"center_x": 0.5}
+                on_release: root.check_answer("incorrect")
+
+
+
+<Phase2>:
+    name: "phase2"
+
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(20)
+        padding: dp(20)
+        size_hint: None, None
+        size: root.width, root.height
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: self.minimum_height
+
+            Widget:
+                size_hint_x: None
+                width: dp(10)
+
+            MDLabel:
+                text: "Caesar Cipher"
+                font_size: "24sp"
+                halign: "center"
+                valign: "top"
+                size_hint_y: 0.1
+
+            Widget:
+                size_hint_x: None
+                width: dp(10)
+
+            MDLabel:
+                id: timer_label
+                text: str(root.timer)
+                font_size: "18sp"
+                halign: "right"
+                valign: "top"
+
+        Widget:
+            size_hint_y: None
+            height: dp(20)
+
+        MDLabel:
+            text: "Briefly explain what the Caesar Cipher is and what you need to do."
+            font_size: "18sp"
+            halign: "center"
+            valign: "middle"
+            size_hint_y: 0.2
+
+        Widget:
+            size_hint_y: None
+            height: dp(20)
+
+        MDLabel:
+            id: encrypted_label
+            text: root.encrypted_message
+            font_size: "18sp"
+            halign: "center"
+            valign: "middle"
+
+        Widget:
+            size_hint_y: None
+            height: dp(20)
+
+        MDTextField:
+            id: decryption_input
+            hint_text: "Type the decrypted message"
+            multiline: False
+            size_hint_y: None
+            height: self.font_size * 2
+            size_hint_x: 0.8 
+            pos_hint: {"center_x": 0.5}
+
+        Widget:
+            size_hint_y: None
+            height: dp(20)
+
+        MDRoundFlatButton:
+            text: "Submit"
+            size_hint: None, None
+            pos_hint: {"center_x": 0.5}
+            on_release: root.check_decryption(decryption_input.text)
+
+
+<Phase3>:
+    BoxLayout:
+        orientation: "vertical"
+        MDLabel:
+            text: root.scenario  # This references the scenario property in Phase3
+            font_size: "18sp"
+            halign: "left"
+            valign: "top"
+        MDRaisedButton:
+            text: "1. Analyze system logs"
+            size_hint: None, None
+            size: 300, 50
+            pos_hint: {"center_x": 0.5}
+            on_release: root.make_decision(self)
+        MDRaisedButton:
+            text: "2. Initiate a counter-attack"
+            size_hint: None, None
+            size: 300, 50
+            pos_hint: {"center_x": 0.5}
+            on_release: root.make_decision(self)
+        MDRaisedButton:
+            text: "3. Collaborate with experts"
+            size_hint: None, None
+            size: 300, 50
+            pos_hint: {"center_x": 0.5}
+            on_release: root.make_decision(self)
+        MDRaisedButton:
+            text: "4. Disconnect the server"
+            size_hint: None, None
+            size: 300, 50
+            pos_hint: {"center_x": 0.5}
+            on_release: root.make_decision(self)

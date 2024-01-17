@@ -17,7 +17,7 @@ import random
 class HomePage(Screen):
     pass
 
-#how to pplay page (add instructions)
+#how to play page (add instructions)
 class HowToPlay(Screen):
     pass
 #phase1: basically a quiz (maybe use a database to randomize the questions)
@@ -78,10 +78,9 @@ class Phase2(Screen):
         return encrypted_message
 
     def check_decryption(self, input_text): #compares input text with original message
-        original_message = "CyberEscape is fun!"
         decrypted_message = self.encrypt_message(self.encrypted_message, 26 - self.shift)
 
-        if input_text == original_message:
+        if input_text == decrypted_message:
             self.manager.current = "phase3"
         else:
             self.manager.current = "final_page"
@@ -89,7 +88,7 @@ class Phase2(Screen):
 #case study
 class Phase3(Screen):
     timer = NumericProperty(120)
-    scenario = StringProperty("")
+    text_scenario = StringProperty("")
 
     def on_enter(self):
         Clock.schedule_interval(self.update_timer, 1)
@@ -105,82 +104,41 @@ class Phase3(Screen):
 
     def present_scenario(self):
         text_scenario = (
-            "You find yourself in the cybersecurity control room, tracking an ongoing cyberattack.\n\n"
-            "Scenario:\n"
-            "A hacker group known as 'DarkByte' is attempting to infiltrate a government server.\n"
-            "They have gained access to classified information and left behind clues.\n"
-            "Your mission is to track the invader, prevent further damage, and uncover their motives.\n\n"
-            "Information:\n"
-            "- Target: Government server\n"
-            "- Invasion Method: Advanced Persistent Threat (APT)\n"
-            "- Clues Left: Cryptic messages in the system logs\n\n"
-            "Decisions:\n"
-            "1. Analyze system logs to decipher cryptic messages.\n"
-            "2. Initiate a counter-attack to block the hacker's access.\n"
-            "3. Collaborate with external cybersecurity experts for assistance.\n"
-            "4. Disconnect the server from the network to contain the breach."
+            "Yoy find yourself in the cybersecurity control room, tracking an ongoing attack."
+            "A hacker group known as 'DarkBit' is attempting to infiltrate a government server with data about 5 million citzens."
+            "They have gained access to classified information and left behind clues."
+            "Your mission is to track the invader and prevent further damage.\n\n"
+            
+        "Information:\n"
+        "- Target: Government server\n"
+        "-Invasion Method: Advanced Persistent Threat (APT)\n"
+        "-Clues Left: Cryptic messages in the system logs"
         )
+        self.text_scenario = text_scenario
         
-        self.scenario = text_scenario
-
-        #labels to display scenario information (need to review)
-        scenario_label = MDLabel(text=text_scenario, font_size="18sp", halign="left", valign="top", markup=True)
-
-        # Create buttons for user decisions
-        button1 = MDRaisedButton(text="1. Analyze system logs", size_hint=(None, None), size=(300, 50),
-                         pos_hint={"center_x": 0.5}, on_release=self.make_decision)
-        button2 = MDRaisedButton(text="2. Initiate a counter-attack", size_hint=(None, None), size=(300, 50),
-                         pos_hint={"center_x": 0.5}, on_release=self.make_decision)
-        button3 = MDRaisedButton(text="3. Collaborate with experts", size_hint=(None, None), size=(300, 50),
-                         pos_hint={"center_x": 0.5}, on_release=self.make_decision)
-        button4 = MDRaisedButton(text="4. Disconnect the server", size_hint=(None, None), size=(300, 50),
-                         pos_hint={"center_x": 0.5}, on_release=self.make_decision)
-
-        # adds widgets to the screen
-        self.add_widget(scenario_label)
-        self.add_widget(button1)
-        self.add_widget(button2)
-        self.add_widget(button3)
-        self.add_widget(button4)
-
-    def make_decision(self, instance): #hets uses decision and shows its consequences
-        decision_number = int(instance.text.split(".")[0])
-
+    def make_decision(self, decision_number):
         consequences_text = ""
         success = False
-
-        if decision_number == 1:
-            #d1: analyze system logs
-            consequences_text = (
-                "You meticulously analyze the system logs and successfully decipher the cryptic messages.\n"
-                "You uncover the hacker's plan and prevent a major data breach.\n"
-                "Congratulations! You made the right decision."
-            )
-            success = True
-        elif decision_number == 2:
-            #d2: Initiate a counter-attack
-            consequences_text = (
-                "You initiate a counter-attack, but the hacker outsmarts you and retaliates with a stronger attack.\n"
-                "Unfortunately, the counter-attack backfires, leading to more damage.\n"
-                "You lost this round. Better luck next time."
-            )
-        elif decision_number == 3:
-            #d3: Collaborate with experts
-            consequences_text = (
-                "You collaborate with external cybersecurity experts who provide valuable insights and assistance.\n"
-                "Together, you successfully thwart the hacker's attempts and secure the server.\n"
-                "Congratulations! You made the right decision."
-            )
-            success = True
-        elif decision_number == 4:
-            #d4: Disconnect the server
-            consequences_text = (
-                "You decide to disconnect the server to contain the breach, but it results in data loss and downtime.\n"
-                "The hacker takes advantage of the disruption and escapes with sensitive information.\n"
-                "You lost this round. Better luck next time."
-            )
-
         
+        if decision_number == 1:
+            success = True
+            consequences_text = "You meticulously analyze the system logs and successfully decipher the cryptic messages.\n"
+            "You uncover the hacker's plan and prevent a major data breach.\n"
+            "Congratulations! You made the right decision."
+        elif decision_number == 2:
+            consequences_text = "You initiate a counter-attack, but the hacker outsmarts you and retaliates with a stronger attack.\n"
+            "Unfortunately, the counter-attack backfires, leading to more damage.\n"
+            "You lost this round. Better luck next time."
+        elif decision_number == 3:
+            success: True
+            consequences_text =  "You collaborate with external cybersecurity experts who provide valuable insights and assistance.\n"
+            "Together, you successfully thwart the hacker's attempts and secure the server.\n"
+            "Congratulations! You made the right decision."
+        elif decision_number == 4:
+            consequences_text = "You decide to disconnect the server to contain the breach, but it results in data loss and downtime.\n"
+            "The hacker takes advantage of the disruption and escapes with sensitive information.\n"
+            "You lost this round. Better luck next time."
+
         self.show_consequences(consequences_text, success)
 
     def show_consequences(self, text, success):
@@ -200,10 +158,18 @@ class ScreenManagement(ScreenManager):
 
 
 class CyberEscapeApp(MDApp):
+    user_name = ""
     def build(self):
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "BlueGray"
         return Builder.load_file("cyberescape.kv")
+    
+    def on_start(self):
+        self.root.ids.howtoplay.user_name = self.user_name
+        self.root.ids.phase1.user_name = self.user_name
+        self.root.ids.phase2.user_name = self.user_name
+        self.root.ids.phase3.user_name = self.user_name
+        self.root.ids.finalpage.user_name = self.user_name
     
 if __name__ == "__main__":
     CyberEscapeApp().run()

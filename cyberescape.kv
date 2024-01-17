@@ -194,7 +194,7 @@ ScreenManagement:
             height: dp(20)
 
         MDLabel:
-            text: "Briefly explain what the Caesar Cipher is and what you need to do."
+            text: "The Caeser cipher is a simple encryption techinique that was used  by Julius Caesar to send secret messages to his allies. It works by shifting the letter in the plaintext message by a certain number of positions, known as the 'shift'. Use brute force to try and decrypt the message bellow:"
             font_size: "18sp"
             halign: "center"
             valign: "middle"
@@ -217,7 +217,6 @@ ScreenManagement:
 
         MDTextField:
             id: decryption_input
-            hint_text: "Type the decrypted message"
             multiline: False
             size_hint_y: None
             height: self.font_size * 2
@@ -236,34 +235,38 @@ ScreenManagement:
 
 
 <Phase3>:
+
+    name: "phase3"
+
     BoxLayout:
         orientation: "vertical"
         MDLabel:
-            text: root.scenario  # This references the scenario property in Phase3
+            text: root.text_scenario  # This references the scenario property in Phase3
             font_size: "18sp"
             halign: "left"
             valign: "top"
+            markup: True
         MDRaisedButton:
             text: "1. Analyze system logs"
             size_hint: None, None
             size: 300, 50
             pos_hint: {"center_x": 0.5}
-            on_release: root.make_decision(self)
+            on_release: root.make_decision(1)
         MDRaisedButton:
             text: "2. Initiate a counter-attack"
             size_hint: None, None
             size: 300, 50
             pos_hint: {"center_x": 0.5}
-            on_release: root.make_decision(self)
+            on_release: root.make_decision(2)
         MDRaisedButton:
             text: "3. Collaborate with experts"
             size_hint: None, None
             size: 300, 50
             pos_hint: {"center_x": 0.5}
-            on_release: root.make_decision(self)
+            on_release: root.make_decision(3)
         MDRaisedButton:
             text: "4. Disconnect the server"
             size_hint: None, None
             size: 300, 50
             pos_hint: {"center_x": 0.5}
-            on_release: root.make_decision(self)
+            on_release: root.make_decision(4)

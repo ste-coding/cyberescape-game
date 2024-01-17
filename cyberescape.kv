@@ -4,7 +4,8 @@ ScreenManagement:
     Phase1:
     Phase2:
     Phase3:
-    FinalPage:
+    LostPage:
+    WonPage:
 
 <HomePage>:
     name: "homepage"
@@ -57,7 +58,40 @@ ScreenManagement:
                 text: "How to Play"
                 size_hint: None, None
                 pos_hint: {"center_x": 0.5}
-                on_release: app.root.current = "howtoplay"
+                on_release: app.root.current = "how_to_play"
+
+
+<HowToPlay>:
+    name: "how_to_play"
+
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(20)
+        padding: dp(20)
+        size_hint: None, None
+        size: root.width, root.height
+
+    MDLabel:
+        text:"How to play"
+        font_size: "24sp"
+        pos_hint: {"center_x": 0.5, "top": 1}
+
+    MDLabel:
+        text: "Welcome to CyberEscape! Follow these steps to play: 1. Enter your name in the homepage.2. Click 'Start' to begin the quiz.3. Answer the questions within the time limit.4. Solve the Caesar Cipher in Phase 2.5. Navigate through the case study in Phase 3.6. Make decisions to prevent a cyber attack.7. Reach the end and see if you succeeded!"
+        font_size: "18sp"
+        halign: "left"
+        valign: "top"
+
+
+    Widget:
+        size_hint_y: None
+        height: dp(20)
+
+    MDRoundFlatButton:
+        text: "Back to Home"
+        size_hint: None, None
+        pos_hint:{"center_x":0.5}
+        on_release: app.root.current = "homepage"
 
 <Phase1>:
     name: "phase1"
@@ -270,3 +304,65 @@ ScreenManagement:
             size: 300, 50
             pos_hint: {"center_x": 0.5}
             on_release: root.make_decision(4)
+
+<WonPage>:
+    name: "winner_page"
+
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(20)
+        padding: dp(20)
+        size_hint: None, None
+        size: root.width, root.height
+    
+    Label:
+        text: "Congratulations!"
+        font_size: "24sp"
+        pos_hint: {"center_x":0.5, "top":1}
+
+    MDLabel:
+        text: "You successfully completed CyberEscape!"
+        font_size: "18sp"
+        halign: "left"
+        valign: "top"
+
+    Widget:
+        size_hint_y: None
+        height: dp(20)
+
+    MDRoundFlatButton:
+        text:"Restart Game"
+        size_hint: None, None
+        pos_hint: {"center_x": 0.5}
+        on_release: app.root.current = "homepage"
+
+<LostPage>:
+    name: "lost_page"
+
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(20)
+        padding: dp(20)
+        size_hint: None, None
+        size: root.width, root.height
+    
+    Label:
+        text: "Sorry, You Lost!"
+        font_size: "24sp"
+        pos_hint: {"center_x":0.5, "top":1}
+
+    MDLabel:
+        text: "Better luck next time. Keep learning and trying!"
+        font_size: "18sp"
+        halign: "left"
+        valign: "top"
+
+    Widget:
+        size_hint_y: None
+        height: dp(20)
+
+    MDRoundFlatButton:
+        text:"Restart Game"
+        size_hint: None, None
+        pos_hint: {"center_x": 0.5}
+        on_release: app.root.current = "homepage"

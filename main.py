@@ -1,5 +1,5 @@
 #to finish:
-#final page and how to play page, design, phase 2 check decrypted message, phase 3 texts and transiton
+#design, texts and transiton
 from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -33,7 +33,7 @@ class Phase1(Screen):
     def update_timer(self, dt): #keeps updating the timer and sends player to final page if not answered in time
         self.timer -= 1
         if self.timer == 0:
-            self.manager.current = "final_page"
+            self.manager.current = "lost_page"
         else:
             self.ids.timer_label.text = str(self.timer)
 
@@ -41,7 +41,7 @@ class Phase1(Screen):
         if selected_answer == "correct":
             self.manager.current = "phase2"
         else:
-            self.manager.current = "final_page"
+            self.manager.current = "lost_page"
 
 #caeser cypher
 class Phase2(Screen):
@@ -60,7 +60,7 @@ class Phase2(Screen):
     def update_timer(self, dt):
         self.timer -= 1
         if self.timer == 0:
-            self.manager.current = "final_page"
+            self.manager.current = "lost_page"
 
     def generate_encrypted_message(self):
         original_message = "CyberEscape is fun!"
@@ -83,7 +83,7 @@ class Phase2(Screen):
         if input_text == decrypted_message:
             self.manager.current = "phase3"
         else:
-            self.manager.current = "final_page"
+            self.manager.current = "lost_page"
 
 #case study
 class Phase3(Screen):
@@ -100,7 +100,10 @@ class Phase3(Screen):
     def update_timer(self, dt):
         self.timer -= 1
         if self.timer == 0:
-            self.manager.current = "final_page"
+            self.manager.current = "lost_page"
+            
+    def change_screen(self, screen_name, *args):
+        self.manager.current = screen_name
 
     def present_scenario(self):
         text_scenario = (
@@ -146,11 +149,14 @@ class Phase3(Screen):
         self.add_widget(consequences_label)
 
         if success:
-            Clock.schedule_once(functools.partial(self.change_screen, "congratulations_page"), 5)
+            Clock.schedule_once(functools.partial(self.change_screen, "winner_page"), 5)
         else:
-            Clock.schedule_once(functools.partial(self.change_screen, "sorry_page"), 5)
+            Clock.schedule_once(functools.partial(self.change_screen, "lost_page"), 5)
 
-class FinalPage(Screen):
+class LostPage(Screen):
+    pass
+
+class WonPage(Screen):
     pass
 
 class ScreenManagement(ScreenManager):
@@ -158,18 +164,10 @@ class ScreenManagement(ScreenManager):
 
 
 class CyberEscapeApp(MDApp):
-    user_name = ""
     def build(self):
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "BlueGray"
         return Builder.load_file("cyberescape.kv")
-    
-    def on_start(self):
-        self.root.ids.howtoplay.user_name = self.user_name
-        self.root.ids.phase1.user_name = self.user_name
-        self.root.ids.phase2.user_name = self.user_name
-        self.root.ids.phase3.user_name = self.user_name
-        self.root.ids.finalpage.user_name = self.user_name
     
 if __name__ == "__main__":
     CyberEscapeApp().run()

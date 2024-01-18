@@ -1,11 +1,13 @@
 #to finish:
 #design, texts and transiton
 from kivy.lang import Builder
+from kivy.uix.screenmanager import ScreenManager, Screen, SwapTransition
 from kivymd.app import MDApp
-from kivy.uix.screenmanager import ScreenManager, Screen
 from kivymd.uix.label import MDLabel
 from kivymd.uix.button import MDRoundFlatButton, MDRaisedButton
 from kivymd.uix.textfield import MDTextField
+from kivymd.color_definitions import colors
+from kivy.core.window import Window
 from kivy.clock import Clock
 from kivy.properties import NumericProperty
 from kivy.properties import StringProperty
@@ -165,8 +167,18 @@ class ScreenManagement(ScreenManager):
 
 class CyberEscapeApp(MDApp):
     def build(self):
-        self.theme_cls.theme_style = "Dark"
+        self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "BlueGray"
+        Window.size = (400, 700)
+        sm = ScreenManager(transition=SwapTransition())
+        sm.add_widget(HomePage(name="homepage"))
+        sm.add_widget(HowToPlay(name="how_to_play"))
+        sm.add_widget(Phase1(name="phase1"))
+        sm.add_widget(Phase2(name="phase2"))
+        sm.add_widget(Phase3(name="phase3"))
+        sm.add_widget(WonPage(name="winner_page"))
+        sm.add_widget(LostPage(name="lost_page"))
+        return sm
         return Builder.load_file("cyberescape.kv")
     
 if __name__ == "__main__":

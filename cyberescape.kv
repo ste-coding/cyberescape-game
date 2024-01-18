@@ -21,9 +21,11 @@ ScreenManagement:
             orientation: "vertical"
             size_hint_y: 1
 
-            Label:
+            MDLabel:
                 text: "CyberEscape"
-                font_size: "24sp"
+                bold: True
+                font_size: "36sp"
+                halign: "center"
                 pos_hint: {"center_x": 0.5, "top": 1}
 
             TextInput:
@@ -33,11 +35,11 @@ ScreenManagement:
                 size_hint_y: None
                 height: self.font_size * 2
                 size_hint_x: 0.8 
-                pos_hint: {"center_x": 0.5, "top": 0.8}
+                pos_hint: {"center_x": 0.5, "top": 1}
 
         Widget:
             size_hint_y: None
-            height: dp(2)
+            height: dp(40)
 
         BoxLayout:
             orientation: "vertical"
@@ -59,7 +61,10 @@ ScreenManagement:
                 size_hint: None, None
                 pos_hint: {"center_x": 0.5}
                 on_release: app.root.current = "how_to_play"
-
+            
+            Widget:
+                size_hint_y: None
+                height: dp(80)
 
 <HowToPlay>:
     name: "how_to_play"
@@ -151,6 +156,7 @@ ScreenManagement:
             MDRaisedButton:
                 text: "Protecting Information"
                 size_hint: None, None
+                size:200, 50
                 pos_hint: {"center_x": 0.5}
                 on_release: root.check_answer("correct")
 

@@ -56,7 +56,7 @@ ScreenManagement:
             pos_hint: {"center_x": 0.5, "center_y": 0.8}
 
         MDLabel:
-            text: "Welcome to CyberEscape! Follow these steps to play: 1. Enter your name in the homepage.2. Click 'Start' to begin the quiz.3. Answer the questions within the time limit.4. Solve the Caesar Cipher in Phase 2.5. Navigate through the case study in Phase 3.6. Make decisions to prevent a cyber attack.7. Reach the end and see if you succeeded!"
+            text: "Bem-vindo ao CyberEscape! Siga estes passos para jogar: 1. Clique em 'Começar'. 2. Responda às perguntas dentro do limite de tempo. 3. Desencripte uma mensagem secreta  dentro do tempo e clique em 'Enviar'. 4.   Analise o estudo de caso e tome a decisão certa dentro do limite de tempo, o resultado será mostrado após você escolher sua resposta."
             font_size: "16sp"
             halign: "justify"
             pos_hint: {"center_x": 0.5, "center_y": 0.6}
@@ -81,7 +81,7 @@ ScreenManagement:
         size: root.width, root.height
         
         MDLabel:
-            text: "Question time"
+            text: "Quiz"
             font_style: "H5"
             halign: "center"
             pos_hint: {"center_x": 0.25, "center_y": 0.9}
@@ -94,32 +94,32 @@ ScreenManagement:
             pos_hint: {"center_x": 0.9, "center_y": 0.9}
 
         MDLabel:
-            text: "What is the primary goal of cybersecurity?"
+            text: "Qual é o objetivo principal da cibersegurança?"
             font_size: "22sp"
             halign: "center"
             pos_hint: {"center_x": 0.5, "center_y": 0.65}
 
         MDRaisedButton:
-            text: "Protecting Information"
+            text: "Proteger informação"
             size_hint: None, None
             size:200, 50
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
             on_release: root.check_answer("correct")
 
         MDRaisedButton:
-            text: "Making Systems Faster"
+            text: "Fazer sistemas mais rápidos"
             size_hint: None, None
             pos_hint: {"center_x": 0.5, "center_y": 0.42}
             on_release: root.check_answer("incorrect")
 
         MDRaisedButton:
-            text: "Selling Software"
+            text: "Criar e vender software"
             size_hint: None, None
             pos_hint: {"center_x": 0.5, "center_y": 0.34}
             on_release: root.check_answer("incorrect")
 
         MDRaisedButton:
-            text: "Creating Websites"
+            text: "Criar websites"
             size_hint: None, None
             pos_hint: {"center_x": 0.5, "center_y": 0.26}
             on_release: root.check_answer("incorrect")
@@ -137,7 +137,7 @@ ScreenManagement:
     FloatLayout:
         size: root.width, root.height
         MDLabel:
-            text: "Caesar Cipher"
+            text: "Cifra de César"
             font_style:"H5"
             halign: "center"
             pos_hint: {"center_x": 0.25, "center_y": 0.9}
@@ -151,7 +151,7 @@ ScreenManagement:
 
 
         MDLabel:
-            text: "The Caeser cipher is a simple encryption technique that was used  by Julius Caesar to send secret messages to his allies. It works by shifting the letter in the plaintext message by a certain number of positions, known as the 'shift'. Use brute force to try and decrypt the message bellow:"
+            text: "A cifra de César é uma técnica de criptografia simples usada por Júlio César para enviar mensagens secretas a seus aliados. Ela funciona deslocando a letra da mensagem de texto simples em um certo número de posições, conhecido como 'shift'. Use força bruta para tentar descriptografar a mensagem abaixo:"
             font_style: "Body1"
             halign: "justify"
             pos_hint: {"center_x": 0.5, "center_y": 0.7}
@@ -172,7 +172,7 @@ ScreenManagement:
             pos_hint: {"center_x": 0.5, "center_y": 0.4}
 
         MDRoundFlatButton:
-            text: "Submit"
+            text: "Enviar"
             size_hint: None, None
             pos_hint: {"center_x": 0.5, "center_y": 0.3}
             on_release: root.check_decryption(decryption_input.text)
@@ -197,46 +197,46 @@ ScreenManagement:
         size: root.width, root.height
 
         MDLabel:
-            text: "Case Study"
+            text: "Estudo de Caso"
             font_style:"H5"
             halign: "center"
-            pos_hint: {"center_x": 0.25, "center_y": 0.9}
+            pos_hint: {"center_x": 0.25, "center_y": 0.95}
 
         MDLabel:
             id: timer_label
             text: str(root.timer)
             font_size: "18sp"
             halign: "center"
-            pos_hint: {"center_x": 0.9, "center_y": 0.9}
+            pos_hint: {"center_x": 0.9, "center_y": 0.95}
 
         MDLabel:
             text: root.text_scenario  # This references the scenario property in Phase3
             font_size: "16sp"
             halign: "justify"
-            pos_hint: {"center_x": 0.5, "center_y": 0.75}
+            pos_hint: {"center_x": 0.5, "center_y": 0.73}
             markup: True
             padding: 15
 
         MDRaisedButton:
-            text: "1. Analyze system logs"
+            text: "1. Analisar registros do sistema"
             size_hint: None, None
             size: 300, 50
             pos_hint: {"center_x": 0.5, "center_y": 0.4}
             on_release: root.make_decision(1)
         MDRaisedButton:
-            text: "2. Initiate a counter-attack"
+            text: "2. Iniciar um contra-ataque"
             size_hint: None, None
             size: 300, 50
             pos_hint: {"center_x": 0.5, "center_y": 0.32}
             on_release: root.make_decision(2)
         MDRaisedButton:
-            text: "3. Collaborate with experts"
+            text: "3. Colaborar com especialistas"
             size_hint: None, None
             size: 300, 50
             pos_hint: {"center_x": 0.5, "center_y": 0.24}
             on_release: root.make_decision(3)
         MDRaisedButton:
-            text: "4. Disconnect the server"
+            text: "4. Desconectar o servidor"
             size_hint: None, None
             size: 300, 50
             pos_hint: {"center_x": 0.5, "center_y": 0.16}
@@ -255,20 +255,21 @@ ScreenManagement:
         size: root.width, root.height
 
         MDLabel:
-            text: "Congratulations!"
+            text: "Mandou bem!"
             font_style: "H4"
             halign: "center"
             pos_hint: {"center_x": 0.5, "center_y": 0.8}
 
 
         MDLabel:
-            text: "You successfully completed CyberEscape!"
+            text: "Você completou com sucesso o CyberEscape!"
             font_size: "18sp"
             halign: "center"
             pos_hint: {"center_x": 0.5, "center_y": 0.6}
+            padding: 15
 
         MDFillRoundFlatButton:
-            text: "Restart Game"
+            text: "Jogar de novo"
             size_hint: None, None
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
             on_release: app.root.current = homepage
@@ -285,20 +286,21 @@ ScreenManagement:
         size: root.width, root.height
 
         MDLabel:
-            text: "Sorry, you lost!"
+            text: "Não foi dessa vez!"
             font_style: "H4"
             halign: "center"
             pos_hint: {"center_x": 0.5, "center_y": 0.8}
 
 
         MDLabel:
-            text: "Better luck next time. Keep learning and trying!"
+            text: "Boa sorte na próxima vez. Continue aprendendo e tentando!"
             font_size: "18sp"
             halign: "center"
             pos_hint: {"center_x": 0.5, "center_y": 0.6}
+            padding: 15
 
         MDFillRoundFlatButton:
-            text: "Restart Game"
+            text: "Jogar de novo"
             size_hint: None, None
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
             on_release: app.root.current = homepage

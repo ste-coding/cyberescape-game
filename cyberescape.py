@@ -73,7 +73,7 @@ class Phase2(Screen):
             self.manager.current = "lost_page"
 
     def generate_encrypted_message(self):
-        original_message = "CyberEscape is fun!"
+        original_message = "Mantenha suas senhas seguras e atualizadas"
         self.shift = random.randint(1, 25)
         self.encrypted_message = self.encrypt_message(original_message, self.shift)
 
@@ -117,16 +117,17 @@ class Phase3(Screen):
 
     def present_scenario(self):
         text_scenario = (
-            "You find yourself in the cybersecurity control room, tracking an ongoing attack."
-            "A hacker group known as 'DarkBit' is attempting to infiltrate a government server with data about 5 million citzens."
-            "They have gained access to classified information and left behind clues."
-            "Your mission is to track the invader and prevent further damage.\n\n"
-            
-        "Information:\n"
-        "- Target: Government server\n"
-        "- Invasion Method: Advanced Persistent Threat (APT)\n"
-        "- Clues Left: Cryptic messages in the system logs"
-        )
+        "Você está rastreando um ataque em andamento."
+        "Um grupo de hackers conhecido como 'DarkBit' está tentando infiltrar um servidor governamental com dados de 5 milhões de cidadãos."
+        "Eles obtiveram acesso a informações classificadas e deixaram pistas."
+        "Sua missão é rastrear o invasor e evitar danos adicionais.\n\n"
+    
+        "Informações:\n"
+        "- Alvo: Servidor governamental\n"
+        "- Método de Invasão: Ameaça Persistente Avançada (APT)\n"
+        "- Pistas: Mensagens cifradas nos registros do sistema"
+)
+
         self.text_scenario = text_scenario
         
     def make_decision(self, decision_number):
@@ -135,27 +136,28 @@ class Phase3(Screen):
         
         if decision_number == 1:
             success = True
-            consequences_text = "You meticulously analyze the system logs and successfully decipher the cryptic messages.\n"
-            "You uncover the hacker's plan and prevent a major data breach.\n"
-            "Congratulations! You made the right decision."
+            consequences_text = "Você analisa meticulosamente os registros do sistema e decifra com sucesso as mensagens cifradas.\n"
+            "Você descobre o plano do hacker e evita uma grande violação de dados.\n"
+            "Parabéns! Você tomou a decisão certa."
         elif decision_number == 2:
-            consequences_text = "You initiate a counter-attack, but the hacker outsmarts you and retaliates with a stronger attack.\n"
-            "Unfortunately, the counter-attack backfires, leading to more damage.\n"
-            "You lost this round. Better luck next time."
+            consequences_text = "Você inicia um contra-ataque, mas o hacker o supera e retaliando com um ataque mais forte.\n"
+            "Infelizmente, o contra-ataque acaba falhando, resultando em mais danos.\n"
+            "Você perdeu esta rodada. Boa sorte na próxima vez."
         elif decision_number == 3:
             success = True
-            consequences_text =  "You collaborate with external cybersecurity experts who provide valuable insights and assistance.\n"
-            "Together, you successfully thwart the hacker's attempts and secure the server.\n"
-            "Congratulations! You made the right decision."
+            consequences_text = "Você colabora com especialistas externos em cibersegurança que fornecem insights valiosos e assistência.\n"
+            "Juntos, vocês conseguem frustrar as tentativas do hacker e garantir a segurança do servidor.\n"
+            "Parabéns! Você tomou a decisão certa."
         elif decision_number == 4:
-            consequences_text = "You decide to disconnect the server to contain the breach, but it results in data loss and downtime.\n"
-            "The hacker takes advantage of the disruption and escapes with sensitive information.\n"
-            "You lost this round. Better luck next time."
+            consequences_text = "Você decide desconectar o servidor para conter a violação, mas isso resulta em perda de dados e tempo de inatividade.\n"
+            "O hacker aproveita a interrupção e escapa com informações sensíveis.\n"
+            "Você perdeu esta rodada. Boa sorte na próxima vez."
 
         self.show_consequences(consequences_text, success)
 
     def show_consequences(self, text, success):
-        consequences_label = MDLabel(text=text, font_size="18sp", halign="center", valign="middle", markup=True)
+        consequences_label = MDLabel(text=text, font_size="18sp", halign="center", pos_hint= {"center_x": 0.5, "center_y": 0.48}, markup=True, padding = 5)
+            
         self.add_widget(consequences_label)
 
         if success:

@@ -1,27 +1,36 @@
-from kaki.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen, SwapTransition
-from kivymd.app import MDApp
-from kivymd.uix.label import MDLabel
-from kivymd.uix.button import MDRoundFlatButton, MDRaisedButton
-from kivymd.uix.textfield import MDTextField
-from kivymd.color_definitions import colors
+from kivy.uix.image import Image
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
 from kivy.clock import Clock
 from kivy.properties import NumericProperty
 from kivy.properties import StringProperty
+from kivymd.app import MDApp
+from kivymd.uix.label import MDLabel
+from kivymd.uix.button import MDRoundFlatButton, MDRaisedButton, MDFillRoundFlatButton
+from kivymd.uix.textfield import MDTextField
+from kivymd.color_definitions import colors
+
 
 import functools
 import random
 
-#homepage
+# homepage
+
+
 class HomePage(Screen):
     pass
 
-#how to play page (add instructions)
+# how to play page (add instructions)
+
+
 class HowToPlay(Screen):
     pass
-#phase1: basically a quiz (maybe use a database to randomize the questions)
+# phase1: basically a quiz (maybe use a database to randomize the questions)
+
+
 class Phase1(Screen):
     timer = NumericProperty(30)
 
@@ -46,7 +55,7 @@ class Phase1(Screen):
 
 #caeser cypher
 class Phase2(Screen):
-    timer = NumericProperty(90)
+    timer = NumericProperty(600)
     shift = NumericProperty(0)
     encrypted_message = StringProperty("")
     decrypted_message = StringProperty("")
@@ -166,8 +175,8 @@ class ScreenManagement(ScreenManager):
 
 class CyberEscapeApp(MDApp):
     def build(self):
-        self.theme_cls.theme_style = "Light"
-        self.theme_cls.primary_palette = "BlueGray"
+        self.theme_cls.theme_style = "Dark"
+        self.theme_cls.primary_palette = "Red"
         Window.size = (400, 700)
         sm = ScreenManager(transition=SwapTransition())
         sm.add_widget(HomePage(name="homepage"))

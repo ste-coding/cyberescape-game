@@ -9,94 +9,71 @@ ScreenManagement:
 
 <HomePage>:
     name: "homepage"
-    
-    BoxLayout:
-        orientation: "vertical"
-        spacing: dp(20)
-        padding: dp(20)
-        size_hint: None, None
-        size: root.width, root.height
 
-        BoxLayout:
-            orientation: "vertical"
-            size_hint_y: 1
+    FloatLayout:
 
-            MDLabel:
-                text: "CyberEscape"
-                bold: True
-                font_size: "36sp"
-                halign: "center"
-                pos_hint: {"center_x": 0.5, "top": 1}
+        Image:
+            source: "images/cyberescape_logo2.png"
+            size: (20, 20)
+            pos_hint: {"center_x":0.5, "center_y": 0.8}
 
-            TextInput:
-                id: name_input
-                hint_text: "Insira seu nome"
-                multiline: False
-                size_hint_y: None
-                height: self.font_size * 2
-                size_hint_x: 0.8 
-                pos_hint: {"center_x": 0.5, "top": 1}
+        MDLabel:
+            text:"Bem-vindo(a)!"
+            font_style: "H5"
+            halign: "center"
+            pos_hint: {"center_x":0.5, "center_y": 0.6}
 
-        Widget:
-            size_hint_y: None
-            height: dp(40)
+        MDLabel:
+            text: "Desafie-se, Proteja-se, Escape!"
+            font_style: "Caption"
+            halign: "center"
+            pos_hint: {"center_x":0.5, "center_y": 0.55}
 
-        BoxLayout:
-            orientation: "vertical"
-            size_hint_y: None
-            height: self.minimum_height
+        MDRoundFlatButton:
+            text: "Start"
+            font_size: 18
+            size_hint_x: 0.8
+            pos_hint: {"center_x": 0.5, "center_y": 0.4}
+            on_release: app.root.current = "phase1"
 
-            MDRoundFlatButton:
-                text: "Start"
-                size_hint: None, None
-                pos_hint: {"center_x": 0.5}
-                on_release: app.root.current = "phase1"
-
-            Widget:
-                size_hint_y: None
-                height: dp(20)
-
-            MDRoundFlatButton:
-                text: "How to Play"
-                size_hint: None, None
-                pos_hint: {"center_x": 0.5}
-                on_release: app.root.current = "how_to_play"
-            
-            Widget:
-                size_hint_y: None
-                height: dp(80)
+        MDRoundFlatButton:
+            text: "How To Play"
+            font_size: 18
+            size_hint_x: 0.8
+            pos_hint: {"center_x": 0.5, "center_y": 0.3}
+            on_release: app.root.current = "how_to_play"
 
 <HowToPlay>:
     name: "how_to_play"
 
     BoxLayout:
         orientation: "vertical"
-        spacing: dp(20)
-        padding: dp(20)
+        spacing: 20
+        padding: 20
         size_hint: None, None
         size: root.width, root.height
 
-    MDLabel:
-        text:"How to play"
-        font_size: "24sp"
-        pos_hint: {"center_x": 0.5, "top": 1}
+        MDLabel:
+            text:"How to play"
+            font_size: "24sp"
+            pos_hint: {"center_x": 0.5, "top": 1}
 
-    MDLabel:
-        text: "Welcome to CyberEscape! Follow these steps to play: 1. Enter your name in the homepage.2. Click 'Start' to begin the quiz.3. Answer the questions within the time limit.4. Solve the Caesar Cipher in Phase 2.5. Navigate through the case study in Phase 3.6. Make decisions to prevent a cyber attack.7. Reach the end and see if you succeeded!"
-        font_size: "18sp"
-        halign: "left"
-        valign: "top"
+        MDLabel:
+            text: "Welcome to CyberEscape! Follow these steps to play: 1. Enter your name in the homepage.2. Click 'Start' to begin the quiz.3. Answer the questions within the time limit.4. Solve the Caesar Cipher in Phase 2.5. Navigate through the case study in Phase 3.6. Make decisions to prevent a cyber attack.7. Reach the end and see if you succeeded!"
+            font_size: "18sp"
+            halign: "left"
+            valign: "top"
 
 
-    Widget:
-        size_hint_y: None
-        height: dp(20)
+        Widget:
+            size_hint_y: None
+            height: dp(20)
 
-    MDRoundFlatButton:
-        text: "Back to Home"
-        size_hint: None, None
-        pos_hint:{"center_x":0.5}
-        on_release: app.root.current = "homepage"
+        MDRoundFlatButton:
+            text: "Back to Home"
+            size_hint: None, None
+            pos_hint:{"center_x":0.5}
+            on_release: app.root.current = "homepage"
 
 <Phase1>:
     name: "phase1"
@@ -115,13 +92,13 @@ ScreenManagement:
 
             Widget:
                 size_hint_x: None
-                width: dp(10)
+                width: dp(20)
+                height: dp(20)
 
             MDLabel:
-                text: "Test Your Knowledge"
+                text: "Question time"
                 font_size: "24sp"
                 halign: "center"
-                valign: "top"
 
             Widget:
                 size_hint_x: None
@@ -140,7 +117,7 @@ ScreenManagement:
 
         MDLabel:
             text: "What is the primary goal of cybersecurity?"
-            font_size: "18sp"
+            font_size: "20sp"
             halign: "center"
             valign: "middle"
 
@@ -197,8 +174,8 @@ ScreenManagement:
 
     BoxLayout:
         orientation: "vertical"
-        spacing: dp(20)
-        padding: dp(20)
+        spacing: dp(25)
+        padding: dp(25)
         size_hint: None, None
         size: root.width, root.height
 
@@ -207,15 +184,10 @@ ScreenManagement:
             size_hint_y: None
             height: self.minimum_height
 
-            Widget:
-                size_hint_x: None
-                width: dp(10)
-
             MDLabel:
                 text: "Caesar Cipher"
                 font_size: "24sp"
-                halign: "center"
-                valign: "top"
+                valign: "middle"
                 size_hint_y: 0.1
 
             Widget:
@@ -227,45 +199,36 @@ ScreenManagement:
                 text: str(root.timer)
                 font_size: "18sp"
                 halign: "right"
-                valign: "top"
+                valign: "middle"
 
         Widget:
             size_hint_y: None
-            height: dp(20)
+            height: dp(60)
 
         MDLabel:
-            text: "The Caeser cipher is a simple encryption techinique that was used  by Julius Caesar to send secret messages to his allies. It works by shifting the letter in the plaintext message by a certain number of positions, known as the 'shift'. Use brute force to try and decrypt the message bellow:"
+            text: "The Caeser cipher is a simple encryption technique that was used  by Julius Caesar to send secret messages to his allies. It works by shifting the letter in the plaintext message by a certain number of positions, known as the 'shift'. Use brute force to try and decrypt the message bellow:"
             font_size: "18sp"
-            halign: "center"
+            halign: "justify"
             valign: "middle"
-            size_hint_y: 0.2
+            size_hint_y: 0.1
 
         Widget:
             size_hint_y: None
-            height: dp(20)
+            height: dp(30)
 
         MDLabel:
             id: encrypted_label
             text: root.encrypted_message
-            font_size: "18sp"
+            font_size: "22sp"
             halign: "center"
             valign: "middle"
-
-        Widget:
-            size_hint_y: None
-            height: dp(20)
 
         MDTextField:
             id: decryption_input
             multiline: False
-            size_hint_y: None
             height: self.font_size * 2
-            size_hint_x: 0.8 
+            size_hint_x: 0.8
             pos_hint: {"center_x": 0.5}
-
-        Widget:
-            size_hint_y: None
-            height: dp(20)
 
         MDRoundFlatButton:
             text: "Submit"
@@ -273,6 +236,30 @@ ScreenManagement:
             pos_hint: {"center_x": 0.5}
             on_release: root.check_decryption(decryption_input.text)
 
+        Widget:
+            size_hint_y: None
+            height: dp(40)
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: self.minimum_height
+
+            Image:
+                source: "images/caeser.png"
+                size_hint: (None, None)
+                size: dp(40), dp(40)
+                pos_hint: {"left": 1, "bottom": 1}
+
+            Widget:
+                size_hint_x: None
+                width: dp(200)
+
+            Image:
+                source: "images/cyberescape_name.png"
+                size_hint: (None, None)
+                size: dp(100), dp(45)
+                pos_hint: {"right": 1, "bottom": 1}
 
 <Phase3>:
 
@@ -280,95 +267,167 @@ ScreenManagement:
 
     BoxLayout:
         orientation: "vertical"
+        spacing: dp(25)
+        padding: dp(25)
+        size_hint: None, None
+        size: root.width, root.height
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: self.minimum_height
+
+            MDLabel:
+                text: "Case Study"
+                font_size: "24sp"
+                valign: "middle"
+                size_hint_y: 0.1
+
+            Widget:
+                size_hint_x: None
+                width: dp(10)
+
+            MDLabel:
+                id: timer_label
+                text: str(root.timer)
+                font_size: "18sp"
+                halign: "right"
+                valign: "middle"
         MDLabel:
             text: root.text_scenario  # This references the scenario property in Phase3
-            font_size: "18sp"
-            halign: "left"
-            valign: "top"
+            font_size: "16sp"
+            halign: "justify"
+            valign: "center"
             markup: True
-        MDRaisedButton:
-            text: "1. Analyze system logs"
-            size_hint: None, None
-            size: 300, 50
-            pos_hint: {"center_x": 0.5}
-            on_release: root.make_decision(1)
-        MDRaisedButton:
-            text: "2. Initiate a counter-attack"
-            size_hint: None, None
-            size: 300, 50
-            pos_hint: {"center_x": 0.5}
-            on_release: root.make_decision(2)
-        MDRaisedButton:
-            text: "3. Collaborate with experts"
-            size_hint: None, None
-            size: 300, 50
-            pos_hint: {"center_x": 0.5}
-            on_release: root.make_decision(3)
-        MDRaisedButton:
-            text: "4. Disconnect the server"
-            size_hint: None, None
-            size: 300, 50
-            pos_hint: {"center_x": 0.5}
-            on_release: root.make_decision(4)
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: None
+            height: self.minimum_height
+            spacing: dp(10)
+
+            MDRaisedButton:
+                text: "1. Analyze system logs"
+                size_hint: None, None
+                size: 300, 50
+                pos_hint: {"center_x": 0.5}
+                on_release: root.make_decision(1)
+            MDRaisedButton:
+                text: "2. Initiate a counter-attack"
+                size_hint: None, None
+                size: 300, 50
+                pos_hint: {"center_x": 0.5}
+                on_release: root.make_decision(2)
+            MDRaisedButton:
+                text: "3. Collaborate with experts"
+                size_hint: None, None
+                size: 300, 50
+                pos_hint: {"center_x": 0.5}
+                on_release: root.make_decision(3)
+            MDRaisedButton:
+                text: "4. Disconnect the server"
+                size_hint: None, None
+                size: 300, 50
+                pos_hint: {"center_x": 0.5}
+                on_release: root.make_decision(4)
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: self.minimum_height
+
+            Image:
+                source: "images/caeser.png"
+                size_hint: (None, None)
+                size: dp(40), dp(40)
+                pos_hint: {"left": 1, "bottom": 1}
+
+            Widget:
+                size_hint_x: None
+                width: dp(200)
+
+            Image:
+                source: "images/cyberescape_name.png"
+                size_hint: (None, None)
+                size: dp(100), dp(45)
+                pos_hint: {"right": 1, "bottom": 1}
 
 <WonPage>:
     name: "winner_page"
 
     BoxLayout:
         orientation: "vertical"
-        spacing: dp(20)
-        padding: dp(20)
+        padding:dp(20)
         size_hint: None, None
         size: root.width, root.height
-    
-    Label:
-        text: "Congratulations!"
-        font_size: "24sp"
-        pos_hint: {"center_x":0.5, "top":1}
 
-    MDLabel:
-        text: "You successfully completed CyberEscape!"
-        font_size: "18sp"
-        halign: "left"
-        valign: "top"
+        MDLabel:
+            text: "Congratulations!"
+            font_size: "24sp"
+            halign: "center"
+            valign: "top"
 
-    Widget:
-        size_hint_y: None
-        height: dp(20)
+        Widget:
+            size_hint_y: None
+            height: dp(20)
 
-    MDRoundFlatButton:
-        text:"Restart Game"
-        size_hint: None, None
-        pos_hint: {"center_x": 0.5}
-        on_release: app.root.current = "homepage"
+        MDLabel:
+            text: "You successfully completed CyberEscape!"
+            font_size: "18sp"
+            halign: "center"
+            valign: "middle"
+
+        Widget:
+            size_hint_y: None
+            height: dp(40)
+
+        MDFillRoundFlatButton:
+            text: "Restart Game"
+            size_hint: None, None
+            pos_hint: {"center_x":0.5}
+            on_release: app.root.current = homepage
+
+        Image:
+            source: "images/cyberescape_logo2.png"
+            size_hint: (20, 20)
+            pos_hint: {"center_x":0.8, "top":0.4}
 
 <LostPage>:
     name: "lost_page"
 
     BoxLayout:
         orientation: "vertical"
-        spacing: dp(20)
-        padding: dp(20)
+        padding:dp(20)
         size_hint: None, None
         size: root.width, root.height
-    
-    Label:
-        text: "Sorry, You Lost!"
-        font_size: "24sp"
-        pos_hint: {"center_x":0.5, "top":1}
 
-    MDLabel:
-        text: "Better luck next time. Keep learning and trying!"
-        font_size: "18sp"
-        halign: "left"
-        valign: "top"
+        MDLabel:
+            text: "Sorry, you lost!"
+            font_size: "24sp"
+            halign: "center"
+            valign: "top"
 
-    Widget:
-        size_hint_y: None
-        height: dp(20)
+        Widget:
+            size_hint_y: None
+            height: dp(20)
 
-    MDRoundFlatButton:
-        text:"Restart Game"
-        size_hint: None, None
-        pos_hint: {"center_x": 0.5}
-        on_release: app.root.current = "homepage"
+        MDLabel:
+            text: "Better luck next time. Keep learning and trying!"
+            font_size: "18sp"
+            halign: "center"
+            valign: "middle"
+
+        Widget:
+            size_hint_y: None
+            height: dp(40)
+
+        MDFillRoundFlatButton:
+            text: "Restart Game"
+            size_hint: None, None
+            pos_hint: {"center_x":0.5}
+            on_release: app.root.current = homepage
+
+        Image:
+            source: "images/cyberescape_logo2.png"
+            size_hint: (20, 20)
+            pos_hint: {"center_x":0.5, "top":0.4}

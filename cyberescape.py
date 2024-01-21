@@ -55,7 +55,7 @@ class Phase1(Screen):
 
 #caeser cypher
 class Phase2(Screen):
-    timer = NumericProperty(600)
+    timer = NumericProperty(120)
     shift = NumericProperty(0)
     encrypted_message = StringProperty("")
     decrypted_message = StringProperty("")
@@ -117,15 +117,15 @@ class Phase3(Screen):
 
     def present_scenario(self):
         text_scenario = (
-            "Yoy find yourself in the cybersecurity control room, tracking an ongoing attack."
+            "You find yourself in the cybersecurity control room, tracking an ongoing attack."
             "A hacker group known as 'DarkBit' is attempting to infiltrate a government server with data about 5 million citzens."
             "They have gained access to classified information and left behind clues."
             "Your mission is to track the invader and prevent further damage.\n\n"
             
         "Information:\n"
         "- Target: Government server\n"
-        "-Invasion Method: Advanced Persistent Threat (APT)\n"
-        "-Clues Left: Cryptic messages in the system logs"
+        "- Invasion Method: Advanced Persistent Threat (APT)\n"
+        "- Clues Left: Cryptic messages in the system logs"
         )
         self.text_scenario = text_scenario
         
@@ -143,7 +143,7 @@ class Phase3(Screen):
             "Unfortunately, the counter-attack backfires, leading to more damage.\n"
             "You lost this round. Better luck next time."
         elif decision_number == 3:
-            success: True
+            success = True
             consequences_text =  "You collaborate with external cybersecurity experts who provide valuable insights and assistance.\n"
             "Together, you successfully thwart the hacker's attempts and secure the server.\n"
             "Congratulations! You made the right decision."
@@ -187,7 +187,7 @@ class CyberEscapeApp(MDApp):
         sm.add_widget(WonPage(name="winner_page"))
         sm.add_widget(LostPage(name="lost_page"))
         return sm
-        return Builder.load_file(filename="cyberescape.kv")
+
     
 if __name__ == "__main__":
     CyberEscapeApp().run()

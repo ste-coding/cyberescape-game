@@ -158,24 +158,25 @@ ScreenManagement:
             padding: 15
 
         MDLabel:
-            id: encrypted_label
-            text: root.encrypted_message
-            font_size: "22sp"
+            id: info_label
+            text: root.info_label
+            font_style: "Body1"
             halign: "center"
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
         MDTextField:
-            id: decryption_input
+            id: input_text
+            hint_text: "Digite a mensagem encriptada"
             multiline: False
             height: self.font_size * 2
             size_hint_x: 0.8
-            pos_hint: {"center_x": 0.5, "center_y": 0.4}
+            pos_hint: {"center_x": 0.5, "center_y": 0.35}
 
         MDRoundFlatButton:
             text: "Enviar"
             size_hint: None, None
-            pos_hint: {"center_x": 0.5, "center_y": 0.3}
-            on_release: root.check_decryption(decryption_input.text)
+            pos_hint: {"center_x": 0.5, "center_y": 0.28}
+            on_release: root.check_encryption(input_text)
 
         Image:
             source: "images/caeser.png"
@@ -303,7 +304,7 @@ ScreenManagement:
             text: "Jogar de novo"
             size_hint: None, None
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
-            on_release: app.root.current = homepage
+            on_release: app.root.current = "homepage"
 
         Image:
             source: "images/cyberescape_logo2.png"

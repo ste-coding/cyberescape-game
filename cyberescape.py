@@ -10,25 +10,18 @@ from kivy.properties import StringProperty
 from kivymd.app import MDApp
 from kivymd.uix.label import MDLabel
 from kivymd.uix.button import MDRoundFlatButton, MDRaisedButton, MDFillRoundFlatButton
+from kivy.uix.textinput import TextInput
 from kivymd.uix.textfield import MDTextField
 from kivymd.color_definitions import colors
-
-
 import functools
 import random
-
-# homepage
-
 
 class HomePage(Screen):
     pass
 
-# how to play page (add instructions)
-
 
 class HowToPlay(Screen):
     pass
-# phase1: basically a quiz (maybe use a database to randomize the questions)
 
 
 class Phase1(Screen):
@@ -58,8 +51,19 @@ class Phase2(Screen):
     timer = NumericProperty(120)
     shift = NumericProperty(0)
     encrypted_message = StringProperty("")
-    decrypted_message = StringProperty("")
+    original_message = StringProperty("")
+    info_label = StringProperty("")
+    input_text=None
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.input_text = MDTextField(
+            hint_text="Type your encrypted message here",
+            multiline=False,
+            pos_hint={"center_x": 0.5, "center_y": 0.5},
+            on_text_validate=self.check_encryption,
+        )
+        
     def on_enter(self):
         Clock.schedule_interval(self.update_timer, 1)
         self.generate_encrypted_message()
@@ -73,10 +77,13 @@ class Phase2(Screen):
             self.manager.current = "lost_page"
 
     def generate_encrypted_message(self):
-        original_message = "Mantenha suas senhas seguras e atualizadas"
+        self.original_message = "Mantenha suas senhas seguras e atualizadas"
         self.shift = random.randint(1, 25)
-        self.encrypted_message = self.encrypt_message(original_message, self.shift)
+        self.encrypted_message = self.encrypt_message(self.original_message, self.shift)
 
+        self.info_label = (f"Shift: {self.shift}\nEncripte essa mensagem:\n {self.original_message}"
+        )
+        
     def encrypt_message(self, message, shift):
         encrypted_message = ""
         for char in message:
@@ -87,13 +94,12 @@ class Phase2(Screen):
                 encrypted_message += char
         return encrypted_message
 
-    def check_decryption(self, input_text): #compares input text with original message
-        decrypted_message = self.encrypt_message(self.encrypted_message, 26 - self.shift)
-
-        if input_text == decrypted_message:
+    def check_encryption(self, instance): #compares input text with original message
+        input_text = instance.text.strip()
+        if input_text == self.encrypted_message:
             self.manager.current = "phase3"
         else:
-            self.manager.current = "lost_page"
+            self.manager.current = "lost page"
 
 #case study
 class Phase3(Screen):
@@ -161,9 +167,9 @@ class Phase3(Screen):
         self.add_widget(consequences_label)
 
         if success:
-            Clock.schedule_once(functools.partial(self.change_screen, "winner_page"), 5)
+            Clock.schedule_once(functools.partial(self.change_screen, "winner_page"), 3)
         else:
-            Clock.schedule_once(functools.partial(self.change_screen, "lost_page"), 5)
+            Clock.schedule_once(functools.partial(self.change_screen, "lost_page"), 3)
 
 class LostPage(Screen):
     pass
@@ -193,4 +199,3 @@ class CyberEscapeApp(MDApp):
     
 if __name__ == "__main__":
     CyberEscapeApp().run()
-

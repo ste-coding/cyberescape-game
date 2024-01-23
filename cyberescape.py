@@ -24,21 +24,23 @@ class HowToPlay(Screen):
     pass
 
 
-class Phase1(Screen):
-    timer = NumericProperty(30)
-
-    def on_enter(self): # starts the timer when the screen is entered
+class TimerScreen(Screen):
+    timer = NumericProperty(0)
+    
+    def on_enter(self):
         Clock.schedule_interval(self.update_timer, 1)
-
-    def on_pre_leave(self): #stops the timer when leaving the screen
+    
+    def on_pre_leave(self):
         Clock.unschedule(self.update_timer)
-
-    def update_timer(self, dt): #keeps updating the timer and sends player to final page if not answered in time
+    
+    def update_timer(self, dt):
         self.timer -= 1
         if self.timer == 0:
             self.manager.current = "lost_page"
-        else:
-            self.ids.timer_label.text = str(self.timer)
+    
+class Phase1(TimerScreen, Screen):
+    timer = NumericProperty(30)
+
 
     def check_answer(self, selected_answer):
         if selected_answer == "correct":
@@ -47,7 +49,7 @@ class Phase1(Screen):
             self.manager.current = "lost_page"
 
 #caeser cypher
-class Phase2(Screen):
+class Phase2(TimerScreen, Screen):
     timer = NumericProperty(120)
     shift = NumericProperty(0)
     encrypted_message = StringProperty("")
@@ -63,19 +65,11 @@ class Phase2(Screen):
             pos_hint={"center_x": 0.5, "center_y": 0.5},
             on_text_validate=self.check_encryption,
         )
-        
+    
     def on_enter(self):
         Clock.schedule_interval(self.update_timer, 1)
         self.generate_encrypted_message()
-
-    def on_pre_leave(self):
-        Clock.unschedule(self.update_timer)
-
-    def update_timer(self, dt):
-        self.timer -= 1
-        if self.timer == 0:
-            self.manager.current = "lost_page"
-
+        
     def generate_encrypted_message(self):
         self.original_message = "Mantenha suas senhas seguras e atualizadas"
         self.shift = random.randint(1, 25)
@@ -99,24 +93,16 @@ class Phase2(Screen):
         if input_text == self.encrypted_message:
             self.manager.current = "phase3"
         else:
-            self.manager.current = "lost page"
+            self.manager.current = "lost_page"
 
 #case study
-class Phase3(Screen):
+class Phase3(TimerScreen, Screen):
     timer = NumericProperty(120)
     text_scenario = StringProperty("")
-
+    
     def on_enter(self):
         Clock.schedule_interval(self.update_timer, 1)
         self.present_scenario()
-
-    def on_pre_leave(self):
-        Clock.unschedule(self.update_timer)
-
-    def update_timer(self, dt):
-        self.timer -= 1
-        if self.timer == 0:
-            self.manager.current = "lost_page"
             
     def change_screen(self, screen_name, *args):
         self.manager.current = screen_name

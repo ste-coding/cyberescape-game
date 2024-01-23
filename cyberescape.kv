@@ -21,7 +21,7 @@ ScreenManagement:
             text:"Bem-vindo(a)!"
             font_style: "H5"
             halign: "center"
-            pos_hint: {"center_x":0.5, "center_y": 0.6}
+            pos_hint: {"center_x":0.5, "center_y": 0.55}
 
         MDLabel:
             text: "Desafie-se, Proteja-se, Escape!"
@@ -56,7 +56,7 @@ ScreenManagement:
             pos_hint: {"center_x": 0.5, "center_y": 0.8}
 
         MDLabel:
-            text: "Bem-vindo ao CyberEscape! Siga estes passos para jogar: 1. Clique em 'Começar'. 2. Responda às perguntas dentro do limite de tempo. 3. Desencripte uma mensagem secreta  dentro do tempo e clique em 'Enviar'. 4.   Analise o estudo de caso e tome a decisão certa dentro do limite de tempo, o resultado será mostrado após você escolher sua resposta."
+            text: "Bem-vindo(a) ao CyberEscape! Siga estes passos para jogar:\n1. Clique em 'Começar'.\n2. Responda às perguntas dentro do limite de tempo.\n3. Desencripte uma mensagem secreta dentro do tempo e clique em 'Enviar'.\n4. Analise o estudo de caso e tome a decisão certa dentro do limite de tempo, o resultado será mostrado após você escolher sua resposta."
             font_size: "16sp"
             halign: "justify"
             pos_hint: {"center_x": 0.5, "center_y": 0.6}
@@ -65,7 +65,7 @@ ScreenManagement:
         MDRoundFlatButton:
             text: "Retornar"
             size_hint: None, None
-            pos_hint:{"center_x":0.5, "center_y": 0.4}
+            pos_hint:{"center_x":0.5, "center_y": 0.3}
             on_release: app.root.current = "homepage"
 
         Image:
@@ -273,7 +273,7 @@ ScreenManagement:
             text: "Jogar de novo"
             size_hint: None, None
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
-            on_release: app.root.current = homepage
+            on_release: app.reset_game()
 
         Image:
             source: "images/cyberescape_logo2.png"
@@ -304,7 +304,7 @@ ScreenManagement:
             text: "Jogar de novo"
             size_hint: None, None
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
-            on_release: app.root.current = "homepage"
+            on_release: app.reset_game()
 
         Image:
             source: "images/cyberescape_logo2.png"

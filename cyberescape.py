@@ -1,8 +1,6 @@
-from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen, SwapTransition
 from kivy.uix.image import Image
 from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
 from kivy.clock import Clock
 from kivy.properties import NumericProperty
@@ -10,11 +8,11 @@ from kivy.properties import StringProperty
 from kivymd.app import MDApp
 from kivymd.uix.label import MDLabel
 from kivymd.uix.button import MDRoundFlatButton, MDRaisedButton, MDFillRoundFlatButton
-from kivy.uix.textinput import TextInput
 from kivymd.uix.textfield import MDTextField
 from kivymd.color_definitions import colors
 import functools
 import random
+
 
 class HomePage(Screen):
     pass
@@ -24,38 +22,54 @@ class HowToPlay(Screen):
     pass
 
 
+# temporizer
 class TimerScreen(Screen):
     timer = NumericProperty(0)
-    
+
     def on_enter(self):
         Clock.schedule_interval(self.update_timer, 1)
-    
+
     def on_pre_leave(self):
         Clock.unschedule(self.update_timer)
-    
+
+    def reset_timer(self, initial_time):
+        self.timer = initial_time
+
     def update_timer(self, dt):
         self.timer -= 1
         if self.timer == 0:
             self.manager.current = "lost_page"
-    
+
+
 class Phase1(TimerScreen, Screen):
     timer = NumericProperty(30)
 
-
+# simplified method to verify answers
     def check_answer(self, selected_answer):
         if selected_answer == "correct":
             self.manager.current = "phase2"
         else:
             self.manager.current = "lost_page"
 
-#caeser cypher
+
+def encrypt_message(message, shift):
+    encrypted_message = ""
+    for char in message:
+        if char.isalpha():
+            shifted_char = chr((ord(char.lower()) - ord('a') + shift) % 26 + ord('a'))
+            encrypted_message += shifted_char if char.islower() else shifted_char.upper()
+        else:
+            encrypted_message += char
+    return encrypted_message
+
+
 class Phase2(TimerScreen, Screen):
     timer = NumericProperty(120)
     shift = NumericProperty(0)
     encrypted_message = StringProperty("")
     original_message = StringProperty("")
     info_label = StringProperty("")
-    input_text=None
+    input_text = None
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -65,52 +79,47 @@ class Phase2(TimerScreen, Screen):
             pos_hint={"center_x": 0.5, "center_y": 0.5},
             on_text_validate=self.check_encryption,
         )
-    
+
     def on_enter(self):
         Clock.schedule_interval(self.update_timer, 1)
         self.generate_encrypted_message()
-        
+
+# resets timer and user's input
+    def reset_phase2(self):
+        self.reset_timer(120)
+        self.input_text = ""
+
     def generate_encrypted_message(self):
         self.original_message = "Mantenha suas senhas seguras e atualizadas"
         self.shift = random.randint(1, 25)
-        self.encrypted_message = self.encrypt_message(self.original_message, self.shift)
+        self.encrypted_message = encrypt_message(self.original_message, self.shift)
 
-        self.info_label = (f"Shift: {self.shift}\nEncripte essa mensagem:\n {self.original_message}"
-        )
-        
-    def encrypt_message(self, message, shift):
-        encrypted_message = ""
-        for char in message:
-            if char.isalpha():
-                shifted_char = chr((ord(char.lower()) - ord('a') + shift) % 26 + ord('a'))
-                encrypted_message += shifted_char if char.islower() else shifted_char.upper()
-            else:
-                encrypted_message += char
-        return encrypted_message
+        self.info_label = f"Shift: {self.shift}\nEncripte essa mensagem:\n {self.original_message}"
 
-    def check_encryption(self, instance): #compares input text with original message
+    # compares input text with original message
+    def check_encryption(self, instance):
         input_text = instance.text.strip()
         if input_text == self.encrypted_message:
             self.manager.current = "phase3"
         else:
             self.manager.current = "lost_page"
 
-#case study
+
 class Phase3(TimerScreen, Screen):
     timer = NumericProperty(120)
     text_scenario = StringProperty("")
-    
+
     def on_enter(self):
         Clock.schedule_interval(self.update_timer, 1)
         self.present_scenario()
-            
+
     def change_screen(self, screen_name, *args):
         self.manager.current = screen_name
 
     def present_scenario(self):
         text_scenario = (
         "Você está rastreando um ataque em andamento."
-        "Um grupo de hackers conhecido como 'DarkBit' está tentando infiltrar um servidor governamental com dados de 5 milhões de cidadãos."
+        "Um grupo de hackers conhecido como 'DarkBit' está tentando infiltrar um servidor governamental com dados de 5 milhões de cidadões."
         "Eles obtiveram acesso a informações classificadas e deixaram pistas."
         "Sua missão é rastrear o invasor e evitar danos adicionais.\n\n"
     
@@ -121,11 +130,11 @@ class Phase3(TimerScreen, Screen):
 )
 
         self.text_scenario = text_scenario
-        
+
     def make_decision(self, decision_number):
         consequences_text = ""
         success = False
-        
+
         if decision_number == 1:
             success = True
             consequences_text = "Você analisa meticulosamente os registros do sistema e decifra com sucesso as mensagens cifradas.\n"
@@ -148,8 +157,8 @@ class Phase3(TimerScreen, Screen):
         self.show_consequences(consequences_text, success)
 
     def show_consequences(self, text, success):
-        consequences_label = MDLabel(text=text, font_size="18sp", halign="center", pos_hint= {"center_x": 0.5, "center_y": 0.48}, markup=True, padding = 5)
-            
+        consequences_label = MDLabel(text=text, font_size="18sp", halign="center", pos_hint={"center_x": 0.5, "center_y": 0.48}, markup=True, padding=5)
+
         self.add_widget(consequences_label)
 
         if success:
@@ -157,11 +166,14 @@ class Phase3(TimerScreen, Screen):
         else:
             Clock.schedule_once(functools.partial(self.change_screen, "lost_page"), 3)
 
+
 class LostPage(Screen):
     pass
 
+
 class WonPage(Screen):
     pass
+
 
 class ScreenManagement(ScreenManager):
     pass
@@ -182,6 +194,13 @@ class CyberEscapeApp(MDApp):
         sm.add_widget(LostPage(name="lost_page"))
         return sm
 
-    
+    def reset_game(self):
+        self.root.get_screen("phase1").reset_timer(30)
+        self.root.get_screen("phase2").reset_phase2()
+        self.root.get_screen("phase3").reset_timer(120)
+
+        self.root.current = "homepage"
+
+
 if __name__ == "__main__":
     CyberEscapeApp().run()

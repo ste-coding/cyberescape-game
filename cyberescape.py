@@ -3,26 +3,37 @@ from kivy.uix.image import Image
 from kivy.uix.floatlayout import FloatLayout
 from kivy.core.window import Window
 from kivy.clock import Clock
-from kivy.properties import NumericProperty
-from kivy.properties import StringProperty
+from kivy.properties import NumericProperty, StringProperty, ListProperty
 from kivymd.app import MDApp
 from kivymd.uix.label import MDLabel
 from kivymd.uix.button import MDRoundFlatButton, MDRaisedButton, MDFillRoundFlatButton
 from kivymd.uix.textfield import MDTextField
 from kivymd.color_definitions import colors
-import functools
+import json
 import random
 
 
+class Welcome(Screen):
+    def submit_name(self):
+        user_name = self.ids.name_input.text.strip()  # Acesso pelo id definido no Kivy
+        if user_name:
+            self.manager.user_name = user_name
+            self.manager.current = "homepage"
+
+
 class HomePage(Screen):
-    pass
+    def on_enter(self, *args):
+        super().on_enter(*args)
+        # Atualiza o texto de boas-vindas com o nome do usuário
+        welcome_label = self.ids.welcome_label  # Acesso pelo id definido no arquivo KivyMD
+        welcome_label.text = f"Bem-vindo(a), {self.manager.user_name}!"
 
 
 class HowToPlay(Screen):
     pass
 
 
-# temporizer
+#configura timer
 class TimerScreen(Screen):
     timer = NumericProperty(0)
 
@@ -37,16 +48,63 @@ class TimerScreen(Screen):
 
     def update_timer(self, dt):
         self.timer -= 1
-        if self.timer == 0:
+        if self.timer <= 0:
             self.manager.current = "lost_page"
 
 
 class Phase1(TimerScreen, Screen):
     timer = NumericProperty(30)
+    question = StringProperty("")
+    options = ListProperty([])
+    correct_index = NumericProperty(-1)
+    question_label = None
 
-# simplified method to verify answers
-    def check_answer(self, selected_answer):
-        if selected_answer == "correct":
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        Clock.schedule_once(self.post_init)
+
+    def post_init(self, *args):
+        # Inicialize o label da pergunta
+        self.question_label = MDLabel(
+            halign="center",
+            pos_hint={"center_x": 0.5, "center_y": 0.8},
+            theme_text_color="Secondary"
+        )
+        self.add_widget(self.question_label)
+        self.load_question()
+
+    def load_question(self, *args):
+        with open('questions_db.json', 'r', encoding='utf-8') as f:
+            questions = json.load(f)["questions"]
+            selected_question = random.choice(questions)
+            self.question = selected_question["question"]  # Atualiza a propriedade question
+            self.options = selected_question["options"]
+            self.correct_index = selected_question["correct"]
+        
+        self.question_label.text = self.question  # Atualiza o texto da pergunta
+        self.create_answer_buttons()  # Cria botões de resposta baseados nas opções
+
+    def create_answer_buttons(self):
+        # Remova todos os widgets, exceto o label da pergunta, antes de adicionar novos botões
+        self.clear_widgets()
+        self.add_widget(self.question_label)  # Adicione novamente o label da pergunta
+
+        start_y = 0.6  # Ajuste a posição inicial conforme necessário
+        step_y = 0.1  # Ajuste o passo conforme necessário
+
+        for index, option in enumerate(self.options):
+            button = MDRaisedButton(
+                text=option,
+                size_hint=(None, None),
+                size=(200, 48),
+                pos_hint={"center_x": 0.5, "center_y": start_y - index * step_y},
+                on_release=lambda x, idx=index: self.check_answer(idx)
+            )
+            self.add_widget(button)
+
+    def check_answer(self, selected_index):
+        # Lógica para verificar a resposta
+        if selected_index == self.correct_index:
             self.manager.current = "phase2"
         else:
             self.manager.current = "lost_page"
@@ -67,38 +125,42 @@ class Phase2(TimerScreen, Screen):
     timer = NumericProperty(120)
     shift = NumericProperty(0)
     encrypted_message = StringProperty("")
-    original_message = StringProperty("")
+    original_message = StringProperty("Sistemas seguros")
     info_label = StringProperty("")
     input_text = None
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.input_text = MDTextField(
-            hint_text="Type your encrypted message here",
+            hint_text="Digite a mensagem encriptada",
             multiline=False,
-            pos_hint={"center_x": 0.5, "center_y": 0.5},
+            pos_hint={"center_x": 0.5, "center_y": 0.35},
             on_text_validate=self.check_encryption,
+            size_hint_x=0.8,
         )
+        self.add_widget(self.input_text)
 
     def on_enter(self):
-        Clock.schedule_interval(self.update_timer, 1)
+        super().on_enter()
         self.generate_encrypted_message()
+
+    def on_leave(self, *args):
+        self.reset_phase2()
 
 # resets timer and user's input
     def reset_phase2(self):
         self.reset_timer(120)
-        self.input_text = ""
+        self.input_text.text = ""
 
     def generate_encrypted_message(self):
-        self.original_message = "Mantenha suas senhas seguras e atualizadas"
         self.shift = random.randint(1, 25)
         self.encrypted_message = encrypt_message(self.original_message, self.shift)
 
         self.info_label = f"Shift: {self.shift}\nEncripte essa mensagem:\n {self.original_message}"
 
     # compares input text with original message
-    def check_encryption(self, instance):
-        input_text = instance.text.strip()
+    def check_encryption(self):
+        input_text = self.input_text.text.strip()
         if input_text == self.encrypted_message:
             self.manager.current = "phase3"
         else:
@@ -110,16 +172,16 @@ class Phase3(TimerScreen, Screen):
     text_scenario = StringProperty("")
 
     def on_enter(self):
-        Clock.schedule_interval(self.update_timer, 1)
+        super().on_enter()
         self.present_scenario()
 
     def change_screen(self, screen_name, *args):
         self.manager.current = screen_name
 
     def present_scenario(self):
-        text_scenario = (
+        self.text_scenario = (
         "Você está rastreando um ataque em andamento."
-        "Um grupo de hackers conhecido como 'DarkBit' está tentando infiltrar um servidor governamental com dados de 5 milhões de cidadões."
+        "Um grupo de hackers conhecido como 'DarkBit' está tentando infiltrar um servidor governamental com dados de 5 milhões de cidadãos."
         "Eles obtiveram acesso a informações classificadas e deixaram pistas."
         "Sua missão é rastrear o invasor e evitar danos adicionais.\n\n"
     
@@ -128,8 +190,6 @@ class Phase3(TimerScreen, Screen):
         "- Método de Invasão: Ameaça Persistente Avançada (APT)\n"
         "- Pistas: Mensagens cifradas nos registros do sistema"
 )
-
-        self.text_scenario = text_scenario
 
     def make_decision(self, decision_number):
         consequences_text = ""
@@ -158,13 +218,12 @@ class Phase3(TimerScreen, Screen):
 
     def show_consequences(self, text, success):
         consequences_label = MDLabel(text=text, font_size="18sp", halign="center", pos_hint={"center_x": 0.5, "center_y": 0.48}, markup=True, padding=5)
-
         self.add_widget(consequences_label)
 
         if success:
-            Clock.schedule_once(functools.partial(self.change_screen, "winner_page"), 3)
+            Clock.schedule_once(lambda dt: self.change_screen("winner_page"), 3)
         else:
-            Clock.schedule_once(functools.partial(self.change_screen, "lost_page"), 3)
+            Clock.schedule_once(lambda dt: self.change_screen("lost_page"), 3)
 
 
 class LostPage(Screen):
@@ -176,7 +235,7 @@ class WonPage(Screen):
 
 
 class ScreenManagement(ScreenManager):
-    pass
+    user_name = StringProperty('')  # Adicione esta linha
 
 
 class CyberEscapeApp(MDApp):
@@ -185,6 +244,7 @@ class CyberEscapeApp(MDApp):
         self.theme_cls.primary_palette = "Red"
         Window.size = (400, 700)
         sm = ScreenManager(transition=SwapTransition())
+        sm.add_widget(Welcome(name="welcome_screen"))
         sm.add_widget(HomePage(name="homepage"))
         sm.add_widget(HowToPlay(name="how_to_play"))
         sm.add_widget(Phase1(name="phase1"))

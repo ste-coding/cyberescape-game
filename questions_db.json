@@ -1,0 +1,114 @@
+{
+  "questions": [
+    {
+      "level": "easy",
+      "question": "O que é Phishing?",
+      "options": [
+        "Software malicioso",
+        "Técnica de pesca",
+        "Ataque para roubar dados",
+        "Email seguro"
+      ],
+      "correct": 2
+    },
+    {
+      "level": "medium",
+      "question": "Função de um Firewall?",
+      "options": [
+        "Acelera a internet",
+        "Protege contra acessos não autorizados",
+        "Criptografa emails",
+        "Monitora a rede"
+      ],
+      "correct": 1
+    },
+    {
+      "level": "easy",
+      "question": "Significado de VPN?",
+      "options": [
+        "Verificação Pessoal Nome",
+        "Vírus Proteção Navegação",
+        "Verificação Procedência Navegação",
+        "Rede Privada Virtual"
+      ],
+      "correct": 3
+    },
+    {
+      "level": "medium",
+      "question": "O que é Ataque de Força Bruta?",
+      "options": [
+        "Hacking com força física",
+        "Adivinhação de senhas",
+        "Desligar servidores com sobrecarga",
+        "Criar senhas inquebráveis"
+      ],
+      "correct": 1
+    },
+    {
+      "level": "easy",
+      "question": "O que é Malware?",
+      "options": [
+        "Ferramenta de segurança",
+        "Refere-se a vírus",
+        "Software para causar dano",
+        "Gerencia bancos de dados"
+      ],
+      "correct": 2
+    },
+    {
+      "level": "medium",
+      "question": "O que é Criptografia?",
+      "options": [
+        "Estudo de mapas",
+        "Dividir informações",
+        "Escrever ou resolver códigos",
+        "Converter dados em código"
+      ],
+      "correct": 3
+    },
+    {
+      "level": "hard",
+      "question": "O que é um Ataque DDoS?",
+      "options": [
+        "Distribuição de software",
+        "Dupla verificação de segurança",
+        "Vulnerabilidade móvel",
+        "Sobrecarga de servidor"
+      ],
+      "correct": 3
+    },
+    {
+      "level": "hard",
+      "question": "Biometria mais segura?",
+      "options": [
+        "Reconhecimento facial",
+        "Impressão digital",
+        "Íris",
+        "Assinatura"
+      ],
+      "correct": 2
+    },
+    {
+      "level": "easy",
+      "question": "O que é um Antivírus?",
+      "options": [
+        "Acelera o PC",
+        "Protege contra malware",
+        "Tipo de vírus",
+        "Hardware contra vírus"
+      ],
+      "correct": 1
+    },
+    {
+      "level": "medium",
+      "question": "O que significa 'IoT'?",
+      "options": [
+        "Internet das Coisas",
+        "Indicação de Ameaças",
+        "Integração de Tecnologia",
+        "Terminal Operacional Interno"
+      ],
+      "correct": 0
+    }
+  ]
+}

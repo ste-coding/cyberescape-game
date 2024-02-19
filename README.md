@@ -1,9 +1,9 @@
-![Header](./images/header-cyberescape.png)
+![Header](./assets/images/header-cyberescape.png)
 
-# CyberEscape - Jogo de Educação em Cibersegurança
+# CyberQuest - Jogo Educativo em Cibersegurança
 
 ## Sobre o Jogo
- O CyberEscape é um jogo educacional desenvolvido como parte da disciplina Projeto Interdisciplinar para Sistemas de Informação I. O jogo tem como objetivo educar os jogadores sobre conceitos fundamentais de cibersegurança, proporcionando uma experiência interativa e desafiadora.
+ O CyberQuest é um jogo educacional desenvolvido como parte da disciplina Projeto Interdisciplinar para Sistemas de Informação I. O jogo tem como objetivo educar os jogadores sobre conceitos fundamentais de cibersegurança, proporcionando uma experiência interativa e desafiadora.
  
 ## Funcionalidades
 - **Quiz de Cibersegurança (Fase 1):** Teste seus conhecimentos respondendo a perguntas sobre cibersegurança.

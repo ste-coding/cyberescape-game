@@ -1,4 +1,4 @@
-![Header](./assets/images/header-cyberescape.png)
+![Header](./assets/images/cyberquest_header.png)
 
 # CyberQuest - Jogo Educativo em Cibersegurança
 

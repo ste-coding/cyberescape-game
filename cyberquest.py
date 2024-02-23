@@ -10,8 +10,10 @@ from kivymd.uix.button import MDRoundFlatButton, MDRaisedButton, MDFillRoundFlat
 from kivymd.uix.textfield import MDTextField
 from kivymd.color_definitions import colors
 from kivymd.font_definitions import theme_font_styles
-import json
 import random
+from random import choice
+import json
+
 
 
 class Welcome(Screen):
@@ -123,7 +125,6 @@ class Phase2(TimerScreen, Screen):
             size_hint_x=0.8,
         )
         self.add_widget(self.input_text)
-        
 
     def on_enter(self):
         super().on_enter()
@@ -153,50 +154,72 @@ class Phase2(TimerScreen, Screen):
 class Phase3(TimerScreen, Screen):
     timer = NumericProperty(120)
     text_scenario = StringProperty("")
-    decision_outcomes = {
-        1: {
-            "text": "Após análisar os registros e decifrar as mensagens, você desvenda o plano do hacker, evitando uma significativa violação de dados e toma a decisão acertada.",
-            "success": True
-            },
-        2: {
-            "text": "Seu contra-ataque é superado pelo hacker, que intensifica o ataque, resultando em falha e mais danos, culminando na sua derrota nesta rodada.",
-            "success": False
-            },
-        3: {
-            "text": "Colaborando com especialistas, vocês neutralizam as tentativas do hacker, assegurando a proteção do servidor.",
-            "success": True
-            },
-        4: {
-            "text": "Ao desconectar o servidor para prevenir a violação, você enfrenta perda de dados e inatividade, permitindo que o hacker fuja com informações cruciais.",
-            "success": False
-        }
-    }
+    scenarios = []
+    current_scenario = None
+    
+    def __init__(self, **kwargs):
+        super(Phase3, self).__init__(**kwargs)
+        #Load the "scenarios" from my json file
+        self.load_scenarios()
+        
+    def load_scenarios(self):
+        try:
+            with open("assets/scenarios.json", encoding='utf-8') as file:
+                self.scenarios = json.load(file)
+        except Exception as e:
+            print(f"Falha ao carregar cenários: {e}")
+            self.scenarios = []
+
     def on_enter(self):
         super(Phase3, self).on_enter()
         self.present_scenario()
 
-
     def present_scenario(self):
-        self.text_scenario = (
-        "Você está rastreando um ataque em andamento."
-        "Um grupo de hackers conhecido como 'DarkBit' está tentando infiltrar um servidor governamental com dados de 5 milhões de cidadãos."
-        "Eles obtiveram acesso a informações classificadas e deixaram pistas."
-        "Sua missão é rastrear o invasor e evitar danos adicionais.\n"
-        "- Alvo: Servidor governamental\n"
-        "- Método de Invasão: Ameaça Persistente Avançada (APT)\n"
-        "- Pistas: Mensagens cifradas nos registros do sistema")
+        if self.scenarios:
+            self.current_scenario = choice(self.scenarios)
+            self.text_scenario = self.current_scenario["scenario"]
+            self.ids.consequences_label.text = ""
 
-    def make_decision(self, decision_number):
-        outcome = self.decision_outcomes.get(decision_number)
-        if outcome:
-            self.show_consequences(outcome["text"], outcome["success"])
-    
-    def show_consequences(self, text, success):
-        self.ids.consequences_label.text = text
-        if success:
-            Clock.schedule_once(lambda dt: self.change_screen("winner_page"), 3)
+            decisions = self.current_scenario.get("decisions", [])
+            for i, decision in enumerate(decisions, start=1):
+                button_id = f"decision{i}"
+                button = self.ids.get(button_id)
+                if button:
+                    button.text = decision["text"]
+                    button.opacity = 1
+                    button.disabled = False
+                    button.on_release = lambda i=i: self.process_decision(i-1)
+                else:
+                    print(f"No button with id {button_id}")
+
+            # Hide any unused buttons
+            for i in range(len(decisions) + 1, 5):  # Assuming a max of 4 decisions
+                button_id = f"decision{i}"
+                button = self.ids.get(button_id)
+                if button:
+                    button.opacity = 0
+                    button.disabled = True
+                    button.text = ""
+
         else:
-            Clock.schedule_once(lambda dt: self.change_screen("lost_page"), 3)
+            self.text_scenario = "Erro ao carregar cenários"
+
+    def process_decision(self, decision_index):
+        decision = self.current_scenario["decisions"][decision_index]
+        self.show_consequences(decision)
+
+    
+    def show_consequences(self, decision):
+        text = decision["consequence"]
+        success = decision["success"]
+
+    # Atualiza o label com o texto da consequência
+        self.ids.consequences_label.text = text
+        
+        if success:
+            Clock.schedule_once(lambda dt: self.change_screen("winner_page"), 5)
+        else:
+            Clock.schedule_once(lambda dt: self.change_screen("lost_page"), 5)
         
     def change_screen(self, screen_name, *args):
         self.manager.current = screen_name

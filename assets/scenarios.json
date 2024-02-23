@@ -1,0 +1,102 @@
+[
+    {
+        "scenario": "Você está rastreando um ataque em andamento. Um grupo de hackers conhecido como 'DarkBit' está tentando infiltrar um servidor governamental com dados de 5 milhões de cidadãos. Eles obtiveram acesso a informações classificadas e deixaram pistas. Sua missão é rastrear o invasor e evitar danos adicionais.\n - Alvo: Servidor governamental\n - Método de Invasão: Ameaça Persistente Avançada (APT)\n - Pistas: Mensagens cifradas nos registros do sistema",
+        "decisions": [
+            {
+                "text": "Analisar registros do sistema",
+                "consequence": "Após analisar os registros e decifrar as mensagens, você desvenda o plano do hacker, evitando uma significativa violação de dados e toma a decisão acertada.",
+                "success": true
+            },
+            {
+                "text": "Iniciar um contra-ataque",
+                "consequence": "Seu contra-ataque é superado pelo hacker, que intensifica o ataque, resultando em falha e mais danos, culminando na sua derrota nesta rodada.",
+                "success": false
+            },
+            {
+                "text": "Colaborar com especialistas",
+                "consequence": "Colaborando com especialistas, vocês neutralizam as tentativas do hacker, assegurando a proteção do servidor.",
+                "success": true
+            },
+            {
+                "text": "Desconectar o servidor",
+                "consequence": "Ao desconectar o servidor para prevenir a violação, você enfrenta perda de dados e inatividade, permitindo que o hacker fuja com informações cruciais.",
+                "success": false
+            }
+        ]
+    },
+    {
+        "scenario": "Você descobre uma vulnerabilidade crítica na aplicação web da sua empresa relacionada ao cookie de sessão configurado com SameSite=None. Você sabe que precisa agir rápido para prevenir possíveis ataques de CSRF ou XSS.",
+        "decisions": [
+            {
+                "text": "Modificar SameSite para Lax",
+                "consequence": "Esta mudança protege sua aplicação contra ataques CSRF, garantindo que os cookies não sejam enviados em solicitações de origem cruzada. Uma decisão inteligente.",
+                "success": true
+            },
+            {
+                "text": "Implementar um CAPTCHA",
+                "consequence": "Embora CAPTCHAs ajudem a diferenciar humanos de bots, essa medida não protege contra o roubo ou abuso de cookies de sessão existentes.",
+                "success": false
+            },
+            {
+                "text": "Forçar HTTPS em todas as páginas",
+                "consequence": "Isso aumenta a segurança da transmissão de dados, mas não aborda diretamente a vulnerabilidade do cookie SameSite=None.",
+                "success": false
+            },
+            {
+                "text": "Aplicar uma política de senhas fortes",
+                "consequence": "Políticas de senha forte são cruciais, mas não resolvem a vulnerabilidade específica relacionada ao SameSite=None em cookies de sessão.",
+                "success": false
+            }
+        ]
+    },
+    {
+        "scenario": "Um ataque de ransomware paralisa as operações de um importante oleoduto, exigindo um grande pagamento em criptomoeda. Uma investigação revela que o acesso foi obtido através de uma senha de VPN vazada.",
+        "decisions": [
+            {
+                "text": "Implementar 2FA para o acesso à VPN",
+                "consequence": "A introdução do 2FA efetivamente bloqueia o acesso não autorizado, mesmo que os atacantes obtenham as senhas. Uma solução robusta para o problema.",
+                "success": true
+            },
+            {
+                "text": "Aumentar a complexidade das senhas",
+                "consequence": "Senhas complexas são importantes, mas, sem outras medidas de segurança, ainda podem ser vazadas ou descobertas por atacantes.",
+                "success": false
+            },
+            {
+                "text": "Introduzir uma política de expiração de senhas",
+                "consequence": "Embora possa ajudar, essa medida sozinha é insuficiente para prevenir o acesso não autorizado se os atacantes já tiverem a senha atual.",
+                "success": false
+            },
+            {
+                "text": "Realizar auditorias na infraestrutura de TI",
+                "consequence": "As auditorias são cruciais para a segurança geral, mas essa ação por si só não teria prevenido o acesso não autorizado neste cenário específico.",
+                "success": false
+            }
+        ]
+    },
+    {
+        "scenario": "Durante uma auditoria de segurança, você identifica um ataque cibernético histórico similar ao que sua empresa poderia enfrentar. Você decide usar esse conhecimento para fortalecer as defesas da empresa.",
+        "decisions": [
+            {
+                "text": "Estudar e implementar defesas específicas",
+                "consequence": "Analisando ataques anteriores e adaptando as defesas da sua empresa, você consegue mitigar vulnerabilidades e fortalecer a segurança.",
+                "success": true
+            },
+            {
+                "text": "Ignorar a informação, considerando-a irrelevante",
+                "consequence": "Desconsiderar lições de ataques históricos deixa sua empresa vulnerável a táticas já conhecidas e exploradas por atacantes.",
+                "success": false
+            },
+            {
+                "text": "Focar apenas em soluções de segurança de software",
+                "consequence": "Embora importante, confiar somente em software de segurança não protege contra todos os tipos de ameaças, especialmente as que exploram outras vulnerabilidades.",
+                "success": false
+            },
+            {
+                "text": "Promover treinamentos de segurança da informação para equipe",
+                "consequence": "Treinamentos aumentam a conscientização sobre segurança entre os funcionários, reduzindo o risco de ataques bem-sucedidos por engenharia social.",
+                "success": true
+            }
+        ]
+    }
+]

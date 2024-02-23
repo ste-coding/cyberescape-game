@@ -278,7 +278,7 @@ ScreenManagement:
 
         MDLabel:
             text: root.text_scenario
-            font_size: 28
+            font_size: 34
             font_name: "assets/font/computer-says-no.ttf"
             halign: "justify"
             pos_hint: {"center_x": 0.5, "center_y": 0.74}
@@ -295,37 +295,52 @@ ScreenManagement:
             padding: [0, 5]
 
         MDRaisedButton:
-            text: "1. Analisar registros do sistema"
+            id: decision1
+            text: ""
+            opacity: 0  # Make invisible initially
+            disabled: True  # Disable initially
             size_hint: None, None
             adaptive_height: True
             pos_hint: {"center_x": 0.5, "center_y": 0.4}
             font_size: 24
             font_name: "assets/font/computer-says-no.ttf"
-            on_release: root.make_decision(1)
+            on_release: root.process_decision(0)
+
         MDRaisedButton:
-            text: "2. Iniciar um contra-ataque"
+            id: decision2
+            text: ""
+            opacity: 0  # Make invisible initially
+            disabled: True  # Disable initially
             size_hint: None, None
             adaptive_height: True
             pos_hint: {"center_x": 0.5, "center_y": 0.32}
             font_size: 24
             font_name: "assets/font/computer-says-no.ttf"
-            on_release: root.make_decision(2)
+            on_release: root.process_decision(1)
+
         MDRaisedButton:
-            text: "3. Colaborar com especialistas"
+            id: decision3
+            text: ""
+            opacity: 0  # Make invisible initially
+            disabled: True  # Disable initially
             size_hint: None, None
             adaptive_height: True
             pos_hint: {"center_x": 0.5, "center_y": 0.24}
             font_size: 24
             font_name: "assets/font/computer-says-no.ttf"
-            on_release: root.make_decision(3)
+            on_release: root.process_decision(2)
+
         MDRaisedButton:
-            text: "4. Desconectar o servidor"
+            id: decision4
+            text: ""
+            opacity: 0  # Make invisible initially
+            disabled: True  # Disable initially
             size_hint: None, None
             adaptive_height: True
             pos_hint: {"center_x": 0.5, "center_y": 0.16}
             font_size: 24
             font_name: "assets/font/computer-says-no.ttf"
-            on_release: root.make_decision(4)
+            on_release: root.process_decision(3)
 
         Image:
             source: "assets/images/cyberquest_name.png"
@@ -359,7 +374,7 @@ ScreenManagement:
             font_size: 30
             font_name: "assets/font/computer-says-no.ttf"
             halign: "center"
-            pos_hint: {"center_x": 0.5, "center_y": 0.6}
+            pos_hint: {"center_x": 0.5, "center_y": 0.7}
             padding: 15
 
         MDFillRoundFlatButton:

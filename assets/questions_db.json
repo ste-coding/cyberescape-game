@@ -109,6 +109,50 @@
         "Terminal Operacional Interno"
       ],
       "correct": 0
-    }
+    },
+      {
+        "level": "hard",
+        "question": "Qual das opções abaixo não descreve uma ação que comumente os criminosos executam, após eles conseguirem obter dados sensíveis de potenciais vítimas como RG, CPF, e selfie.",
+        "options": [
+          "Abrir contas bancárias digitais",
+          "Criar uma conta em um rede social",
+          "Solicitar empréstimos",
+          "Campanhas de de phishing mais elaboradas contra as vítimas"
+        ],
+        "correct": 1
+      },
+      {
+        "level": "hard",
+        "question": "Quais alternativas abaixo é a que possui apenas ferramentas que podem ser utilizadas para identificar o IP e ou domínio de um hidden service na rede Onion?",
+        "options": [
+          "nano, BurpSuite e dig",
+          "Censys, Google e whois",
+          "BurpSuite, Censys e web browser",
+          "nslookup, whois e BurpSuite"
+        ],
+        "correct": 3
+      },
+      {
+        "level": "hard",
+        "question": "Utilizando quais dos seguintes serviços podemos resolver nomes para endereços IP?",
+        "options": [
+          "HTTPS",
+          "DHCP",
+          "LDAP",
+          "DNS"
+        ],
+        "correct": 3
+      },
+      {
+        "level": "hard",
+        "question": "Qual a tecnologia utilizada para fazer a criptografia de apenas um arquivo ou pasta no Windows?",
+        "options": [
+          "CIFS",
+          "EFS",
+          "DFS",
+          "Bitlocker"
+        ],
+        "correct": 1
+      }    
   ]
 }

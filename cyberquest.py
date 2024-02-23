@@ -63,7 +63,10 @@ class Phase1(TimerScreen, Screen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        Clock.schedule_once(self.load_question)
+        
+    def on_enter(self, *args):
+        super().on_enter(*args)
+        self.load_question()
 
     def load_question(self, *args):
         with open('assets/questions_db.json', 'r', encoding='utf-8') as f:

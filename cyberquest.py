@@ -59,16 +59,20 @@ class Phase1(TimerScreen, Screen):
     question = StringProperty("")
     options = ListProperty([])
     correct_index = NumericProperty(-1)
-    question_label = None
+    current_round = NumericProperty(1)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         
     def on_enter(self, *args):
         super().on_enter(*args)
+        self.current_round = 1
         self.load_question()
 
     def load_question(self, *args):
+        if self.current_round > 3:
+            self.manager.current = "phase2"
+            return
         with open('assets/questions_db.json', 'r', encoding='utf-8') as f:
             questions = json.load(f)["questions"]
             selected_question = random.choice(questions)
@@ -94,7 +98,12 @@ class Phase1(TimerScreen, Screen):
 
     def check_answer(self, selected_index):
         if selected_index == self.correct_index:
-            self.manager.current = "phase2"
+            self.manager.score += 100
+            if self.current_round < 3:
+                self.current_round += 1
+                self.load_question()
+            else:
+                self.manager.current = "phase2"
         else:
             self.manager.current = "lost_page"
 
@@ -149,6 +158,7 @@ class Phase2(TimerScreen, Screen):
     def check_encryption(self):
         input_text = self.input_text.text.strip()
         if input_text == self.encrypted_message:
+            self.manager.score += 100
             self.manager.current = "phase3"
         else:
             self.manager.current = "lost_page"
@@ -162,7 +172,6 @@ class Phase3(TimerScreen, Screen):
     
     def __init__(self, **kwargs):
         super(Phase3, self).__init__(**kwargs)
-        #Load the "scenarios" from my json file
         self.load_scenarios()
         
     def load_scenarios(self):
@@ -195,8 +204,7 @@ class Phase3(TimerScreen, Screen):
                 else:
                     print(f"No button with id {button_id}")
 
-            # Hide any unused buttons
-            for i in range(len(decisions) + 1, 5):  # Assuming a max of 4 decisions
+            for i in range(len(decisions) + 1, 5):
                 button_id = f"decision{i}"
                 button = self.ids.get(button_id)
                 if button:
@@ -216,28 +224,41 @@ class Phase3(TimerScreen, Screen):
         text = decision["consequence"]
         success = decision["success"]
 
-    # Atualiza o label com o texto da consequência
         self.ids.consequences_label.text = text
         
         if success:
+            self.manager.score += 100
             Clock.schedule_once(lambda dt: self.change_screen("winner_page"), 5)
         else:
             Clock.schedule_once(lambda dt: self.change_screen("lost_page"), 5)
         
     def change_screen(self, screen_name, *args):
         self.manager.current = screen_name
-
+        
 
 class LostPage(Screen):
-    pass
+    def on_enter(self, *args):
+        super().on_enter(*args)
+        self.ids.score_label.text = f"Pontuação: {self.manager.score}"
+    
+    def play_again(self):
+        app = MDApp.get_running_app()
+        app.reset_game()
 
 
 class WonPage(Screen):
-    pass
+    def on_enter(self, *args):
+        super().on_enter(*args)
+        self.ids.score_label.text = f"Pontuação: {self.manager.score}"
+    
+    def play_again(self):
+        app = MDApp.get_running_app()
+        app.reset_game()
 
 
 class ScreenManagement(ScreenManager):
     user_name = StringProperty('')
+    score = NumericProperty(0)
 
 
 class CyberQuestApp(MDApp):
@@ -250,7 +271,7 @@ class CyberQuestApp(MDApp):
         ]
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Pink"
-        sm = ScreenManager(transition=SwapTransition())
+        sm = ScreenManagement(transition=SwapTransition())
         sm.add_widget(Welcome(name="welcome_screen"))
         sm.add_widget(HomePage(name="homepage"))
         sm.add_widget(HowToPlay(name="how_to_play"))
@@ -262,10 +283,12 @@ class CyberQuestApp(MDApp):
         return sm
 
     def reset_game(self):
-        self.root.get_screen("phase1").reset_timer(30)
+        phase1_screen = self.root.get_screen("phase1")
+        phase1_screen.reset_timer(30)
+        phase1_screen.round = 1
         self.root.get_screen("phase2").reset_phase2()
         self.root.get_screen("phase3").reset_timer(120)
-
+        self.root.score = 0
         self.root.current = "homepage"
 
 

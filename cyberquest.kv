@@ -129,20 +129,20 @@ ScreenManagement:
             font_name: "assets/font/computer-says-no.ttf"
             bold: True
             halign: "center"
-            pos_hint: {"center_x": 0.5, "center_y": 0.8}
+            pos_hint: {"center_x": 0.5, "center_y": 0.84}
 
         MDLabel:
-            text: "Bem-vindo à CyberQuest! Embarque numa jornada de três etapas para conhecer mais sobre Cybersegurança:\n1. Toque em 'Começar' para iniciar seu desafio.\n2. Responda perguntas de escolha múltipla sobre segurança digital.\n3. Criptografe uma mensagem utilizando uma técnica simples antes que o tempo acabe.\n4. Desafio de Decisão: Leia um breve cenário e escolha a ação mais segura. Sua escolha determina seu sucesso!"
+            text: "Bem-vindo à CyberQuest! Embarque numa jornada de quatro etapas para conhecer mais sobre Cybersegurança:\n1. Toque em 'Começar' para iniciar seu desafio.\n2. Responda perguntas de escolha múltipla sobre segurança digital.\n3. Criptografe uma mensagem utilizando uma técnica simples antes que o tempo acabe.\n4. Desafio de Decisão: Leia um breve cenário e escolha a ação mais segura.\n5.Identificação de Phishing: Avalie mensagens para identificar tentativas de phishing antes que o tempo se esgote. Sua escolha determina seu sucesso!"
             font_size: 24
             font_name: "assets/font/computer-says-no.ttf"
             halign: "justify"
-            pos_hint: {"center_x": 0.5, "center_y": 0.6}
-            padding: 20
+            pos_hint: {"center_x": 0.5, "center_y": 0.62}
+            padding: 25
 
         MDRoundFlatButton:
             text: "Retornar"
             size_hint: None, None
-            pos_hint:{"center_x":0.5, "center_y": 0.3}
+            pos_hint:{"center_x":0.5, "center_y": 0.32}
             font_size: 30
             font_name: "assets/font/computer-says-no.ttf"
             on_release: app.root.current = "homepage"
@@ -151,7 +151,7 @@ ScreenManagement:
             source: "assets/images/cyberquest_name.png"
             size_hint: (None, None)
             size: dp(100), dp(45)
-            pos_hint: {"center_x": 0.5, "center_y": 0.2}
+            pos_hint: {"center_x": 0.5, "center_y": 0.17}
 
 <Phase1>:
     canvas.before:
@@ -313,7 +313,7 @@ ScreenManagement:
             halign: "justify"
             pos_hint: {"center_x": 0.5, "center_y": 0.74}
             markup: True
-            padding: 15
+            padding: 20
         
         MDLabel:
             id: consequences_label
@@ -322,7 +322,7 @@ ScreenManagement:
             halign: "center"
             pos_hint: {"center_x": 0.5, "center_y": 0.52}
             markup: True
-            padding: [0, 5]
+            padding: 15
 
         MDRaisedButton:
             id: decision1
@@ -415,6 +415,7 @@ ScreenManagement:
             valign: "middle"
             size_hint: (.8, .2)
             pos_hint: {"center_x": 0.5, "center_y": 0.6}
+            padding: 20
         
         MDLabel:
             id: email_text_label
@@ -425,6 +426,7 @@ ScreenManagement:
             size_hint_y: None
             height: dp(200)
             pos_hint: {"center_x": 0.5, "center_y": 0.6}
+            padding: 20
             
         MDFillRoundFlatButton:
             text: "Ignora"

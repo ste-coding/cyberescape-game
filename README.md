@@ -11,6 +11,7 @@ O CyberQuest é um jogo educacional desenvolvido como parte da disciplina Projet
 - **Quiz de Cibersegurança (Fase 1):** Teste seus conhecimentos respondendo a perguntas sobre cibersegurança com um quiz rápido.
 - **Cifra de César (Fase 2):** Enfrente o desafio de criptografar mensagens usando a cifra de César.
 - **Estudo de Caso (Fase 3):** Tome decisões estratégicas em um cenário envolvente de cibersegurança.
+- **Identificação de Phishing (Fase 4):** Avalie sua capacidade de identificar mensagens de phishing em meio a comunicações legítimas.
 
 ## Como Jogar
 1. **Começo:**
@@ -18,15 +19,15 @@ O CyberQuest é um jogo educacional desenvolvido como parte da disciplina Projet
    - Certifique-se de ter o Python e as bibliotecas necessárias instaladas.
 
 2. **Interface Gráfica:**
-   - Ao iniciar, a tela inicial será exibida. Clique em "Começar" para iniciar o jogo.
+   - Na tela inicial, insira seu nome e clique em "Entrar". Para aprender sobre o jogo, selecione "Como Jogar" e, quando estiver pronto(a), retorne a homepafe e clique em "Começar" para iniciar.
 
 3. **Fases do Jogo:**
-   - O jogo consiste em três fases, cada uma com desafios específicos.
+   - O jogo consiste em quatro fases, cada uma com desafios específicos.
    - Responda a perguntas, decifre mensagens e tome decisões estratégicas.
 
 4. **Vitória ou Derrota:**
    - Com base em suas escolhas e desempenho, você pode vencer ou perder o jogo.
-   - A tela de resultado mostrará seus resultados e oferecerá a opção de jogar novamente.
+   - A tela de resultado mostrará sua pontuação e oferecerá a opção de jogar novamente.
 
 ## Requisitos do Sistema
 - Python 3.x

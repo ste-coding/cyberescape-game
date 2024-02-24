@@ -22,11 +22,20 @@ ScreenManagement:
             size_hint: (None, None)
             size: (dp(400), dp(400))
             pos_hint: {"center_x": 0.5, "center_y": 0.7}
+        
+        MDLabel:
+            text: "Navegue na segurança\nJogue no conhecimento"
+            font_size: 28
+            font_name: "assets/font/computer-says-no.ttf"
+            halign: "center"
+            valign: "middle"
+            pos_hint: {"center_x": 0.5, "center_y": 0.58}
+            color: 1 , 0.412 , 0.706 , 1
 
         MDTextField:
             id: name_input
             hint_text: "Como deseja ser chamado(a)?"
-            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            pos_hint: {"center_x": 0.5, "center_y": 0.45}
             size_hint_x: 0.8
             size_hint_y: 0.08
             mode: "rectangle"
@@ -39,7 +48,7 @@ ScreenManagement:
             font_name: "assets/font/computer-says-no.ttf"
             font_size: 32
             halign: "center"
-            pos_hint: {"center_x": 0.5, "center_y": 0.35}
+            pos_hint: {"center_x": 0.5, "center_y": 0.3}
             on_release: root.submit_name() 
 <HomePage>:
     canvas.before:
@@ -60,17 +69,17 @@ ScreenManagement:
         MDLabel:
             id: welcome_label
             text: "Bem-vindo(a)!"
-            font_size: 36
+            font_size: 34
             font_name: "assets/font/computer-says-no.ttf"
             halign: "center"
-            pos_hint: {"center_x": 0.5, "center_y": 0.55}
+            pos_hint: {"center_x": 0.5, "center_y": 0.56}
 
         MDRoundFlatButton:
             text: "Começar"
             font_size: 36
             font_name: "assets/font/computer-says-no.ttf"
             size_hint_x: 0.7
-            pos_hint: {"center_x": 0.5, "center_y": 0.4}
+            pos_hint: {"center_x": 0.5, "center_y": 0.45}
             on_release: app.root.current = "phase1"
 
         MDRoundFlatButton:
@@ -78,8 +87,29 @@ ScreenManagement:
             font_size: 36
             font_name: "assets/font/computer-says-no.ttf"
             size_hint_x: 0.7
-            pos_hint: {"center_x": 0.5, "center_y": 0.3}
+            pos_hint: {"center_x": 0.5, "center_y": 0.35}
             on_release: app.root.current = "how_to_play"
+        
+        MDIconButton:
+            icon: "volume-high" if root.music_on else "volume-off"
+            pos_hint: {"center_x": 0.76, "center_y": 0.913}
+            on_release: root.toggle_music()
+            user_font_size: "24sp"
+
+        MDSwitch:
+            id: sound_switch
+            size_hint: None, None
+            size: dp(48), dp(48)
+            pos_hint: {"center_x": 0.85, "center_y": 0.9}
+            active: root.music_on
+            on_active: root.toggle_music()
+
+        MDLabel:
+            text: "Som: " + ("Ligado" if sound_switch.active else "Desligado")
+            pos_hint: {"center_x": 0.1, "center_y": 0.1}
+            font_name: "assets/font/computer-says-no.ttf"
+            halign: "right"
+            theme_text_color: "Secondary"
 
 <HowToPlay>:
     canvas.before:

@@ -2,18 +2,22 @@ from kivy.uix.screenmanager import ScreenManager, Screen, SwapTransition
 from kivy.uix.image import Image
 from kivy.uix.floatlayout import FloatLayout
 from kivy.core.window import Window
+from kivy.core.audio import SoundLoader
 from kivy.clock import Clock
-from kivy.properties import NumericProperty, StringProperty, ListProperty, ObjectProperty
+from kivy.properties import NumericProperty, StringProperty, ListProperty, ObjectProperty, BooleanProperty
 from kivymd.app import MDApp
 from kivymd.uix.label import MDLabel
 from kivymd.uix.button import MDRoundFlatButton, MDRaisedButton, MDFillRoundFlatButton
 from kivymd.uix.textfield import MDTextField
 from kivymd.color_definitions import colors
 from kivymd.font_definitions import theme_font_styles
+from kivymd.uix.selectioncontrol import MDSwitch
 import random
 from random import choice
 import json
-
+import pygame
+pygame.init()
+pygame.mixer.init()
 
 
 class Welcome(Screen):
@@ -25,10 +29,25 @@ class Welcome(Screen):
 
 
 class HomePage(Screen):
+    music_on = BooleanProperty(False)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.music_path = "assets/sounds/neon-underworld.mp3"
+        self.music_on = False
+        pygame.mixer.music.load(self.music_path)
+        
     def on_enter(self, *args):
         super().on_enter(*args)
         welcome_label = self.ids.welcome_label
         welcome_label.text = f"Bem-vindo(a), {self.manager.user_name}!"
+    
+    
+    def toggle_music(self, *args):
+        self.music_on = not self.music_on
+        if self.music_on:
+            pygame.mixer.music.play(-1)
+        else:
+            pygame.mixer.music.stop()
 
 
 class HowToPlay(Screen):
@@ -228,7 +247,6 @@ class Phase3(TimerScreen, Screen):
     def process_decision(self, decision_index):
         decision = self.current_scenario["decisions"][decision_index]
         self.show_consequences(decision)
-
     
     def show_consequences(self, decision):
         text = decision["consequence"]
@@ -280,7 +298,6 @@ class Phase4(TimerScreen, Screen):
         else:
             self.manager.current = "winner_page"
 
-
     def process_choice(self, choice):
         self.rounds_completed += 1
         if self.rounds_completed < self.total_rounds:
@@ -288,6 +305,7 @@ class Phase4(TimerScreen, Screen):
         else:
             self.manager.current = "winner_page"
             self.manager.score += 100
+
 
 class LostPage(Screen):
     def on_enter(self, *args):
@@ -313,6 +331,7 @@ class ScreenManagement(ScreenManager):
     user_name = StringProperty('')
     score = NumericProperty(0)
     asked_questions = ListProperty([])
+    music_state = True
 
 
 class CyberQuestApp(MDApp):
@@ -348,7 +367,14 @@ class CyberQuestApp(MDApp):
         phase4_screen.load_messages()
         phase4_screen.rounds_completed = 0
         self.root.score = 0
+        homepage_screen = self.root.get_screen("homepage")
+        if self.root.music_state:
+            if not pygame.mixer.music.get_busy():
+                pygame.mixer.music.play(-1)
+        else:
+            pygame.mixer.music.stop()
         self.root.current = "homepage"
+        
 
 
 if __name__ == "__main__":

@@ -1,0 +1,49 @@
+{
+    "messages": [
+      {
+        "content": "Você recebeu um e-mail suspeito pedindo suas informações de login.\n O que você faz?",
+        "correct_choice": "ignore"
+      },
+      {
+        "content": "Um e-mail do seu banco pede que você clique em um link para verificar sua conta. O link parece suspeito.\n O que você faz?",
+        "correct_choice": "ignore"
+      },
+      {
+        "content": "Você recebe um e-mail de confirmação de uma compra online que você não reconhece. O e-mail solicita que você clique em um link se não fez essa compra.\n O que você faz?",
+        "correct_choice": "ignore"
+      },
+      {
+        "content": "Um e-mail de seu chefe solicita urgentemente o envio de um relatório que você esqueceu de enviar.\n O que você faz?",
+        "correct_choice": "respond"
+      },
+      {
+        "content": "Um e-mail oferece um prêmio em dinheiro grande por preencher uma pesquisa rápida, mas pede detalhes do seu cartão de crédito para 'verificação'.\n O que você faz?",
+        "correct_choice": "ignore"
+      },
+      {
+        "content": "Você recebe um e-mail urgente do departamento de TI da sua empresa solicitando sua senha para uma atualização de sistema.\n O que você faz?",
+        "correct_choice": "ignore"
+      },
+      {
+        "content": "Um colega de trabalho envia um e-mail pedindo feedback sobre um projeto em que vocês estão trabalhando juntos.\n O que você faz?",
+        "correct_choice": "respond"
+      },
+      {
+        "content": "Um e-mail de uma fonte desconhecida contém um arquivo anexo chamado 'Salário_Aumento.pdf'.\n O que você faz?",
+        "correct_choice": "ignore"
+      },
+      {
+        "content": "Um aviso de um serviço de streaming que você usa afirma que sua última fatura não foi processada corretamente e pede que você atualize suas informações de pagamento através de um link.\n O que você faz?",
+        "correct_choice": "ignore"
+      },
+      {
+        "content": "Um e-mail do departamento de recursos humanos solicita que você preencha sua avaliação de desempenho usando um link fornecido.\n O que você faz?",
+        "correct_choice": "respond"
+      },
+      {
+        "content": "Você recebe um aviso de um fornecedor confiável sobre um atraso na entrega de um pedido que você fez. Eles pedem que você confirme se ainda deseja manter o pedido.\n O que você faz?",
+        "correct_choice": "respond"
+      }
+    ]
+  }
+  

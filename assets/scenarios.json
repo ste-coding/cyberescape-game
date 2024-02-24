@@ -1,6 +1,6 @@
 [
     {
-        "scenario": "Você está rastreando um ataque em andamento. Um grupo de hackers conhecido como 'DarkBit' está tentando infiltrar um servidor governamental com dados de 5 milhões de cidadãos. Eles obtiveram acesso a informações classificadas e deixaram pistas. Sua missão é rastrear o invasor e evitar danos adicionais.\n - Alvo: Servidor governamental\n - Método de Invasão: Ameaça Persistente Avançada (APT)\n - Pistas: Mensagens cifradas nos registros do sistema",
+        "scenario": "Você está rastreando um ataque de 'DarkBit' a um servidor governamental com dados de 5 milhões de cidadãos, usando Ameaça Persistente Avançada (APT). Eles acessaram informações classificadas e deixaram mensagens cifradas como pistas. Sua missão é rastrear e parar o invasor.",
         "decisions": [
             {
                 "text": "Analisar registros do sistema",
@@ -28,7 +28,7 @@
         "scenario": "Você descobre uma vulnerabilidade crítica na aplicação web da sua empresa relacionada ao cookie de sessão configurado com SameSite=None. Você sabe que precisa agir rápido para prevenir possíveis ataques de CSRF ou XSS.",
         "decisions": [
             {
-                "text": "Modificar SameSite para Lax",
+                "text": "Mudar SameSite para Lax",
                 "consequence": "Esta mudança protege sua aplicação contra ataques CSRF, garantindo que os cookies não sejam enviados em solicitações de origem cruzada. Uma decisão inteligente.",
                 "success": true
             },
@@ -43,7 +43,7 @@
                 "success": false
             },
             {
-                "text": "Aplicar uma política de senhas fortes",
+                "text": "Usar uma política de senhas fortes",
                 "consequence": "Políticas de senha forte são cruciais, mas não resolvem a vulnerabilidade específica relacionada ao SameSite=None em cookies de sessão.",
                 "success": false
             }
@@ -53,7 +53,7 @@
         "scenario": "Um ataque de ransomware paralisa as operações de um importante oleoduto, exigindo um grande pagamento em criptomoeda. Uma investigação revela que o acesso foi obtido através de uma senha de VPN vazada.",
         "decisions": [
             {
-                "text": "Implementar 2FA para o acesso à VPN",
+                "text": "Implementar 2FA para acessar VPN",
                 "consequence": "A introdução do 2FA efetivamente bloqueia o acesso não autorizado, mesmo que os atacantes obtenham as senhas. Uma solução robusta para o problema.",
                 "success": true
             },
@@ -63,12 +63,12 @@
                 "success": false
             },
             {
-                "text": "Introduzir uma política de expiração de senhas",
+                "text": "Política de expiração de senhas",
                 "consequence": "Embora possa ajudar, essa medida sozinha é insuficiente para prevenir o acesso não autorizado se os atacantes já tiverem a senha atual.",
                 "success": false
             },
             {
-                "text": "Realizar auditorias na infraestrutura de TI",
+                "text": "Auditorias na infraestrutura de TI",
                 "consequence": "As auditorias são cruciais para a segurança geral, mas essa ação por si só não teria prevenido o acesso não autorizado neste cenário específico.",
                 "success": false
             }
@@ -83,17 +83,17 @@
                 "success": true
             },
             {
-                "text": "Ignorar a informação, considerando-a irrelevante",
+                "text": "Ignorar a informação",
                 "consequence": "Desconsiderar lições de ataques históricos deixa sua empresa vulnerável a táticas já conhecidas e exploradas por atacantes.",
                 "success": false
             },
             {
-                "text": "Focar apenas em soluções de segurança de software",
+                "text": "Focar apenas em soluções de segurança",
                 "consequence": "Embora importante, confiar somente em software de segurança não protege contra todos os tipos de ameaças, especialmente as que exploram outras vulnerabilidades.",
                 "success": false
             },
             {
-                "text": "Promover treinamentos de segurança da informação para equipe",
+                "text": "Consientizar a equipe sobre infosec",
                 "consequence": "Treinamentos aumentam a conscientização sobre segurança entre os funcionários, reduzindo o risco de ataques bem-sucedidos por engenharia social.",
                 "success": true
             }

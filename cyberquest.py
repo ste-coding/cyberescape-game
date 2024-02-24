@@ -3,7 +3,7 @@ from kivy.uix.image import Image
 from kivy.uix.floatlayout import FloatLayout
 from kivy.core.window import Window
 from kivy.clock import Clock
-from kivy.properties import NumericProperty, StringProperty, ListProperty
+from kivy.properties import NumericProperty, StringProperty, ListProperty, ObjectProperty
 from kivymd.app import MDApp
 from kivymd.uix.label import MDLabel
 from kivymd.uix.button import MDRoundFlatButton, MDRaisedButton, MDFillRoundFlatButton
@@ -63,6 +63,7 @@ class Phase1(TimerScreen, Screen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.asked_questions = []
         
     def on_enter(self, *args):
         super().on_enter(*args)
@@ -70,15 +71,20 @@ class Phase1(TimerScreen, Screen):
         self.load_question()
 
     def load_question(self, *args):
-        if self.current_round > 3:
+        if self.current_round > 4:
             self.manager.current = "phase2"
             return
         with open('assets/questions_db.json', 'r', encoding='utf-8') as f:
-            questions = json.load(f)["questions"]
+            questions_pool = json.load(f)["questions"]
+            questions = [q for q in questions_pool if q["question"] not in self.asked_questions]
+            if not questions:
+                self.asked_questions = []
+                questions = questions_pool
             selected_question = random.choice(questions)
             self.question = selected_question["question"]
             self.options = selected_question["options"]
             self.correct_index = selected_question["correct"]
+            self.asked_questions.append(self.question)
         
         self.ids.question_label.text = self.question
         self.create_answer_buttons()
@@ -98,8 +104,8 @@ class Phase1(TimerScreen, Screen):
 
     def check_answer(self, selected_index):
         if selected_index == self.correct_index:
-            self.manager.score += 100
-            if self.current_round < 3:
+            self.manager.score += 50
+            if self.current_round < 4:
                 self.current_round += 1
                 self.load_question()
             else:
@@ -158,7 +164,7 @@ class Phase2(TimerScreen, Screen):
     def check_encryption(self):
         input_text = self.input_text.text.strip()
         if input_text == self.encrypted_message:
-            self.manager.score += 100
+            self.manager.score += 300
             self.manager.current = "phase3"
         else:
             self.manager.current = "lost_page"
@@ -167,12 +173,14 @@ class Phase2(TimerScreen, Screen):
 class Phase3(TimerScreen, Screen):
     timer = NumericProperty(120)
     text_scenario = StringProperty("")
-    scenarios = []
+    scenarios = ListProperty()
     current_scenario = None
+    used_scenarios = ListProperty()
     
     def __init__(self, **kwargs):
         super(Phase3, self).__init__(**kwargs)
         self.load_scenarios()
+        self.used_scenarios = []
         
     def load_scenarios(self):
         try:
@@ -188,6 +196,8 @@ class Phase3(TimerScreen, Screen):
 
     def present_scenario(self):
         if self.scenarios:
+            self.current_scenario = self.scenarios.pop(random.randint(0, len(self.scenarios) - 1))
+            self.used_scenarios.append(self.current_scenario)
             self.current_scenario = choice(self.scenarios)
             self.text_scenario = self.current_scenario["scenario"]
             self.ids.consequences_label.text = ""
@@ -227,14 +237,57 @@ class Phase3(TimerScreen, Screen):
         self.ids.consequences_label.text = text
         
         if success:
-            self.manager.score += 100
-            Clock.schedule_once(lambda dt: self.change_screen("winner_page"), 5)
+            self.manager.score += 200
+            Clock.schedule_once(lambda dt: self.change_screen("phase4"), 5)
         else:
             Clock.schedule_once(lambda dt: self.change_screen("lost_page"), 5)
         
     def change_screen(self, screen_name, *args):
         self.manager.current = screen_name
         
+
+class Phase4(TimerScreen, Screen):
+    timer = NumericProperty(90)
+    messages = ListProperty([])
+    used_messages = ListProperty()
+    current_message = ObjectProperty()
+    total_rounds = 4
+    rounds_completed = NumericProperty(0)
+    
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.load_messages()
+        self.used_messages = []
+
+    def load_messages(self):
+        try:
+            with open("assets/phishing_messages.json", encoding='utf-8') as file:
+                self.messages = json.load(file)["messages"]
+        except Exception as e:
+            print(f"Erro ao carregar mensagens: {e}")
+            self.messages = []
+
+    def on_enter(self):
+        super().on_enter()
+        self.rounds_completed = 0
+        self.present_random_message()
+
+    def present_random_message(self):
+        if self.rounds_completed < self.total_rounds and self.messages:
+            self.current_message = random.choice(self.messages)
+            self.messages.remove(self.current_message)
+            self.ids.message_label.text = self.current_message["content"]
+        else:
+            self.manager.current = "winner_page"
+
+
+    def process_choice(self, choice):
+        self.rounds_completed += 1
+        if self.rounds_completed < self.total_rounds:
+            self.present_random_message()
+        else:
+            self.manager.current = "winner_page"
+            self.manager.score += 100
 
 class LostPage(Screen):
     def on_enter(self, *args):
@@ -259,6 +312,7 @@ class WonPage(Screen):
 class ScreenManagement(ScreenManager):
     user_name = StringProperty('')
     score = NumericProperty(0)
+    asked_questions = ListProperty([])
 
 
 class CyberQuestApp(MDApp):
@@ -278,6 +332,7 @@ class CyberQuestApp(MDApp):
         sm.add_widget(Phase1(name="phase1"))
         sm.add_widget(Phase2(name="phase2"))
         sm.add_widget(Phase3(name="phase3"))
+        sm.add_widget(Phase4(name="phase4"))
         sm.add_widget(WonPage(name="winner_page"))
         sm.add_widget(LostPage(name="lost_page"))
         return sm
@@ -288,6 +343,10 @@ class CyberQuestApp(MDApp):
         phase1_screen.round = 1
         self.root.get_screen("phase2").reset_phase2()
         self.root.get_screen("phase3").reset_timer(120)
+        self.root.get_screen("phase4").reset_timer(90)
+        phase4_screen = self.root.get_screen("phase4")
+        phase4_screen.load_messages()
+        phase4_screen.rounds_completed = 0
         self.root.score = 0
         self.root.current = "homepage"
 

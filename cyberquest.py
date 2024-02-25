@@ -75,6 +75,7 @@ class TimerScreen(Screen):
 
 class Phase1(TimerScreen, Screen):
     timer = NumericProperty(30)
+    level = StringProperty("")
     question = StringProperty("")
     options = ListProperty([])
     correct_index = NumericProperty(-1)
@@ -93,6 +94,7 @@ class Phase1(TimerScreen, Screen):
         if self.current_round > 4:
             self.manager.current = "phase2"
             return
+        self.reset_timer(30)
         with open('assets/questions_db.json', 'r', encoding='utf-8') as f:
             questions_pool = json.load(f)["questions"]
             questions = [q for q in questions_pool if q["question"] not in self.asked_questions]
@@ -104,6 +106,9 @@ class Phase1(TimerScreen, Screen):
             self.options = selected_question["options"]
             self.correct_index = selected_question["correct"]
             self.asked_questions.append(self.question)
+            self.level = selected_question["level"]
+            self.ids.level_label.text = "Nível: " + self.level.capitalize()
+
         
         self.ids.question_label.text = self.question
         self.create_answer_buttons()
@@ -117,20 +122,34 @@ class Phase1(TimerScreen, Screen):
                 size_hint=(None, None),
                 size=(200, 48),
                 pos_hint={"center_x": 0.5},
-                on_release=lambda x, idx=index: self.check_answer(idx)
+                md_bg_color=(0.1, 0.1, 0.1, 1) if not MDApp.get_running_app().theme_cls.theme_style == 'Dark' else ( 0.9254901960784314 , 0.12549019607843137 , 0.4 , 1)
             )
+            button.bind(on_release=lambda btn, idx=index: self.check_answer(idx))
             answers_layout.add_widget(button)
 
+
     def check_answer(self, selected_index):
+        def show_correct_answer(*args):
+            for idx, button in enumerate(self.ids.answers_layout.children):
+                if idx == len(self.options) - self.correct_index - 1:
+                    button.md_bg_color = (0, 1, 0, 1)
+                    break
+
         if selected_index == self.correct_index:
             self.manager.score += 50
-            if self.current_round < 4:
-                self.current_round += 1
-                self.load_question()
-            else:
+        else:
+            pass
+
+        Clock.schedule_once(show_correct_answer, 1)
+        Clock.schedule_once(self.decide_next_step, 2) 
+
+    def decide_next_step(self, dt):
+        if self.current_round >= 4:
+            if self.manager.current != "lost_page":
                 self.manager.current = "phase2"
         else:
-            self.manager.current = "lost_page"
+            self.current_round += 1
+            self.load_question()
 
 
 def encrypt_message(message, shift):

@@ -1,18 +1,18 @@
 {
   "questions": [
     {
-      "level": "easy",
+      "level": "fácil",
       "question": "O que é Phishing?",
       "options": [
         "Software malicioso",
         "Técnica de pesca",
-        "Ataque para roubar dados",
+        "Tipo de ataque para roubar dados",
         "Um email seguro"
       ],
       "correct": 2
     },
     {
-      "level": "medium",
+      "level": "médio",
       "question": "Qual a função de um firewall?",
       "options": [
         "Acelera a internet",
@@ -23,18 +23,18 @@
       "correct": 1
     },
     {
-      "level": "easy",
+      "level": "fácil",
       "question": "Qual o significado de VPN?",
       "options": [
         "Verificação Pessoal Nome",
-        "Vírus Proteção Navegação",
+        "Virus Protection Network",
         "Verificação Procedência Navegação",
-        "Rede Privada Virtual"
+        "Virtual Private Network"
       ],
       "correct": 3
     },
     {
-      "level": "medium",
+      "level": "médio",
       "question": "O que é um ataque de força bruta?",
       "options": [
         "Hacking com força física",
@@ -45,18 +45,18 @@
       "correct": 1
     },
     {
-      "level": "easy",
+      "level": "fácil",
       "question": "O que é um malware?",
       "options": [
         "Ferramenta de segurança",
-        "Um vírus",
-        "Software para causar dano",
+        "Software de código aberto",
+        "Software malicioso",
         "Gerenciador de bancos de dados"
       ],
       "correct": 2
     },
     {
-      "level": "medium",
+      "level": "médio",
       "question": "O que é Criptografia?",
       "options": [
         "Estudo de mapas",
@@ -67,7 +67,7 @@
       "correct": 3
     },
     {
-      "level": "hard",
+      "level": "difícil",
       "question": "O que é um Ataque DDoS?",
       "options": [
         "Distribuição de software",
@@ -78,7 +78,7 @@
       "correct": 3
     },
     {
-      "level": "hard",
+      "level": "difícil",
       "question": "Qual o tipo de biometria mais segura?",
       "options": [
         "Reconhecimento facial",
@@ -89,18 +89,18 @@
       "correct": 2
     },
     {
-      "level": "easy",
+      "level": "fácil",
       "question": "O que é um antivírus?",
       "options": [
         "Acelera o PC",
         "Protege contra malware",
         "Tipo de vírus",
-        "Hardware contra vírus"
+        "difícilware contra vírus"
       ],
       "correct": 1
     },
     {
-      "level": "medium",
+      "level": "médio",
       "question": "O que significa 'IoT'?",
       "options": [
         "Internet das Coisas",
@@ -111,7 +111,7 @@
       "correct": 0
     },
       {
-        "level": "hard",
+        "level": "médio",
         "question": "Qual ação NÃO é comum após criminosos obterem dados como RG e CPF?",
         "options": [
           "Abrir contas bancárias digitais",
@@ -122,7 +122,7 @@
         "correct": 1
       },
       {
-        "level": "hard",
+        "level": "difícil",
         "question": "Quais ferramentas identificam IP/domínio de serviços ocultos na Onion?",
         "options": [
           "nano, BurpSuite e dig",
@@ -133,7 +133,7 @@
         "correct": 3
       },
       {
-        "level": "hard",
+        "level": "difícil",
         "question": "Quais serviços podemos resolver nomes para endereços IP?",
         "options": [
           "HTTPS",
@@ -144,7 +144,7 @@
         "correct": 3
       },
       {
-        "level": "medium",
+        "level": "médio",
         "question": "Qual a tecnologia utilizada para criptografar um arquivo/pasta no Windows?",
         "options": [
           "CIFS",
@@ -153,6 +153,61 @@
           "Bitlocker"
         ],
         "correct": 1
-      }    
+      },
+      {
+        "level": "médio",
+        "question": "O que significa a sigla 'USB'?",
+        "options": [
+          "Universal Serial Bus",
+          "Unique Serial Block",
+          "Unified Serial Bit",
+          "Universal System Bus"
+        ],
+        "correct": 0
+      },
+      {
+        "level": "fácil",
+        "question": "Para que serve o 'HTTP'?",
+        "options": [
+          "Transferir hipertexto",
+          "Enviar emails",
+          "Criptografar dados",
+          "Comprimir arquivos"
+        ],
+        "correct": 0
+      },
+      {
+        "level": "fácil",
+        "question": "O que é um 'link'?",
+        "options": [
+          "Um vírus",
+          "Uma senha",
+          "Uma conexão de internet",
+          "Uma referência para outra página da web"
+        ],
+        "correct": 3
+      },
+      {
+        "level": "fácil",
+        "question": "O que é 'RAM'?",
+        "options": [
+          "Disco rígido",
+          "Memória de acesso aleatório",
+          "Processador",
+          "Placa de vídeo"
+        ],
+        "correct": 1
+      },
+      {
+        "level": "fácil",
+        "question": "Qual dispositivo você usa para tirar fotos digitais?",
+        "options": [
+          "Modem",
+          "Scanner",
+          "Câmera",
+          "Teclado"
+        ],
+        "correct": 2
+      }          
   ]
 }

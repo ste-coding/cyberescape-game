@@ -136,9 +136,9 @@ class Phase1(TimerScreen, Screen):
                     break
 
         if selected_index == self.correct_index:
-            self.manager.score += 50
+            self.manager.update_score(50)
         else:
-            pass
+            self.manager.update_score(0)
 
         Clock.schedule_once(show_correct_answer, 1)
         Clock.schedule_once(self.decide_next_step, 2) 
@@ -202,7 +202,7 @@ class Phase2(TimerScreen, Screen):
     def check_encryption(self):
         input_text = self.input_text.text.strip()
         if input_text == self.encrypted_message:
-            self.manager.score += 300
+            self.manager.update_score(300)
             self.manager.current = "phase3"
         else:
             self.manager.current = "lost_page"
@@ -274,7 +274,7 @@ class Phase3(TimerScreen, Screen):
         self.ids.consequences_label.text = text
         
         if success:
-            self.manager.score += 200
+            self.manager.update_score(200)
             Clock.schedule_once(lambda dt: self.change_screen("phase4"), 5)
         else:
             Clock.schedule_once(lambda dt: self.change_screen("lost_page"), 5)
@@ -290,6 +290,7 @@ class Phase4(TimerScreen, Screen):
     current_message = ObjectProperty()
     total_rounds = 4
     rounds_completed = NumericProperty(0)
+    points_per_round = 75
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -315,15 +316,17 @@ class Phase4(TimerScreen, Screen):
             self.messages.remove(self.current_message)
             self.ids.message_label.text = self.current_message["content"]
         else:
+            self.manager.update_score(self.points_per_round * self.total_rounds)
             self.manager.current = "winner_page"
 
     def process_choice(self, choice):
         self.rounds_completed += 1
+        self.manager.update_score(self.points_per_round)  # Adiciona 75 pontos por rodada
         if self.rounds_completed < self.total_rounds:
             self.present_random_message()
         else:
+            # No final de todas as rodadas, não adicionar pontos adicionais aqui, pois já foram adicionados por rodada
             self.manager.current = "winner_page"
-            self.manager.score += 100
 
 
 class LostPage(Screen):
@@ -351,6 +354,12 @@ class ScreenManagement(ScreenManager):
     score = NumericProperty(0)
     asked_questions = ListProperty([])
     music_state = True
+    
+    def update_score(self, points):
+        if self.score + points <= 1000:
+            self.score += points
+        else:
+            self.score = 1000
 
 
 class CyberQuestApp(MDApp):
